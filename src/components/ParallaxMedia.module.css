@@ -1,0 +1,129 @@
+/* BLACK PAPILLON — Parallax Media (cover + contain supported) */
+
+.wrap{
+  --pm-inset: 4%;
+  --pm-border: var(--line);
+  --pm-surface: var(--surface);
+  --pm-veil: 1;
+  --pm-veilTop: .50;
+  --pm-veilBot: .08;
+  --pm-petrol: .20;
+  --pm-shine: .10;
+
+  --pm-bg-blur: 18px;
+  --pm-bg-opacity: .55;
+
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+
+  background: var(--pm-surface);
+  border: 1px solid var(--pm-border);
+  box-shadow: 0 26px 80px rgba(0,0,0,.38);
+  transform: translateZ(0);
+}
+
+/* ✅ contain用のぼかし背景（cover） */
+.bg{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  opacity: var(--pm-bg-opacity);
+  filter: blur(var(--pm-bg-blur)) saturate(.92) contrast(1.04) brightness(.85);
+  transform: scale(1.06); /* blurの端割れ防止 */
+
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* foreground */
+.img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+  filter: saturate(.92) contrast(1.06);
+  max-width: none;
+}
+
+/* cover（従来どおり） */
+.wrap[data-fit="cover"] .img{
+  inset: calc(-1 * var(--pm-inset));
+  width: auto;
+  height: auto;
+  object-fit: cover;
+}
+.wrap[data-fit="cover"] .img{
+  inset: calc(-1 * var(--pm-inset));
+  width: calc(100% + var(--pm-inset) + var(--pm-inset));
+  height: calc(100% + var(--pm-inset) + var(--pm-inset));
+  object-fit: cover;
+}
+/* ✅ contain（引きに見せる本命） */
+.wrap[data-fit="contain"] .img{
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* ←ここで“引き”になる */
+}
+
+/* veil */
+.veil{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--pm-veil);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7,8,10,var(--pm-veilTop)),
+      rgba(7,8,10,var(--pm-veilBot))
+    ),
+    radial-gradient(
+      640px 520px at 72% 26%,
+      rgba(14,42,47,var(--pm-petrol)),
+      rgba(7,8,10,0) 62%
+    );
+
+  z-index: 2;
+}
+
+.wrap::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      70% 80% at 50% 48%,
+      rgba(242,240,234,var(--pm-shine)),
+      rgba(242,240,234,0) 62%
+    ),
+    radial-gradient(
+      120% 120% at 50% 50%,
+      rgba(0,0,0,.0),
+      rgba(0,0,0,.36) 78%,
+      rgba(0,0,0,.52) 100%
+    );
+
+  z-index: 3;
+}
+
+@media (pointer: coarse){
+  .img{ filter: saturate(.95) contrast(1.03); }
+}
+@media (prefers-reduced-motion: reduce){
+  .img, .bg{ will-change: auto; }
+}

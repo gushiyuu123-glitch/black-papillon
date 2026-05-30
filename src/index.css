@@ -1,0 +1,227 @@
+/* src/index.css */
+/* =========================================================
+   BLACK PAPILLON — Global OS (FINAL)
+   - Black main / Petrol sub / Oxblood accent / Off-white text
+   - CSS Modules friendly (low specificity)
+   - Scrollbar designed (quiet + bite on active)
+========================================================= */
+
+:root{
+  /* === COLOR (4) === */
+  --c-black: #07080A;   /* base */
+  --c-petrol: #0E2A2F;  /* depth */
+  --c-oxblood: #4B0F1E; /* accent */
+  --c-white: #F2F0EA;   /* text */
+
+  /* derived */
+  --bg: var(--c-black);
+  --text: var(--c-white);
+  --muted: rgba(242,240,234,.72);
+  --faint: rgba(242,240,234,.42);
+  --line: rgba(242,240,234,.10);
+
+  --surface: rgba(242,240,234,.04);
+  --surface2: rgba(242,240,234,.07);
+  --veil: rgba(7,8,10,.38);
+
+  /* === TYPE ===
+     h1(Hero)はSVG前提でも、他ページで使う可能性があるので残す
+  */
+  --h1-font: "Bodoni Moda","Shippori Mincho","Yu Mincho",serif;
+  --h2-font: "Space Grotesk","Zen Kaku Gothic New","Yu Gothic",sans-serif;
+  --p-font: "IBM Plex Sans JP",system-ui,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+
+  --h1-size: clamp(38px, 5vw, 78px);
+  --h2-size: clamp(18px, 1.6vw, 22px);
+  --p-size: 16px;
+
+  --h1-lh: 1.03;
+  --h2-lh: 1.25;
+  --p-lh: 1.85;
+
+  --h1-trk: 0.02em;
+  --h2-trk: 0.14em;
+  --p-trk: 0.01em;
+
+  /* === LAYOUT === */
+  --gutter: clamp(18px, 2.8vw, 42px);
+  --max: 1180px;
+
+  /* === UI === */
+  --focus: rgba(75,15,30,.62);
+  --shadow-soft: 0 18px 48px rgba(0,0,0,.42);
+
+  color-scheme: dark;
+}
+
+/* ===== Reset / Base (low specificity) ===== */
+*, *::before, *::after{ box-sizing: border-box; }
+html, body{ height: 100%; }
+
+html{
+  background: var(--bg);
+  color: var(--text);
+  text-size-adjust: 100%;
+  scrollbar-gutter: stable; /* 余白ガタつき防止 */
+}
+
+body{
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--p-font);
+  font-size: var(--p-size);
+  line-height: var(--p-lh);
+  letter-spacing: var(--p-trk);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  overflow-x: clip;
+}
+
+/* ===== Typography ===== */
+h1{
+  margin: 0;
+  font-family: var(--h1-font);
+  font-size: var(--h1-size);
+  line-height: var(--h1-lh);
+  letter-spacing: var(--h1-trk);
+  font-weight: 500;
+}
+h2{
+  margin: 0;
+  font-family: var(--h2-font);
+  font-size: var(--h2-size);
+  line-height: var(--h2-lh);
+  letter-spacing: var(--h2-trk);
+  font-weight: 600;
+}
+p{
+  margin: 0;
+  font-family: var(--p-font);
+  font-size: var(--p-size);
+  line-height: var(--p-lh);
+  letter-spacing: var(--p-trk);
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* lists (事故防止：CSS Modules側で必要なら戻せる) */
+ul, ol{ margin: 0; padding: 0; list-style: none; }
+
+a{
+  color: inherit;
+  text-decoration: none;
+  text-underline-offset: 0.18em;
+}
+a:hover{ color: var(--text); }
+a:focus-visible{
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* selection */
+::selection{
+  background: rgba(75,15,30,.55);
+  color: var(--text);
+}
+
+/* media */
+img, video, svg{
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* form */
+button, input, textarea, select{
+  font: inherit;
+  color: inherit;
+}
+button{
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+/* ===== Scrollbar (BLACK PAPILLON / Designed) ===== */
+/* Firefox */
+*{
+  scrollbar-width: thin;
+  scrollbar-color: rgba(242,240,234,.26) rgba(7,8,10,.92);
+}
+
+/* Chromium / Safari */
+::-webkit-scrollbar{ width: 9px; height: 9px; }
+
+::-webkit-scrollbar-track{
+  background: linear-gradient(180deg, rgba(7,8,10,.96), rgba(7,8,10,.86));
+  box-shadow: inset 0 0 0 1px rgba(242,240,234,.06);
+}
+
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(180deg, rgba(242,240,234,.18), rgba(242,240,234,.10));
+  border: 1px solid rgba(242,240,234,.12);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 0 0 1px rgba(75,15,30,.10),
+    0 10px 22px rgba(0,0,0,.42);
+  transition: background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+::-webkit-scrollbar-thumb:hover{
+  background: linear-gradient(180deg, rgba(242,240,234,.26), rgba(242,240,234,.14));
+  border-color: rgba(242,240,234,.16);
+  box-shadow:
+    inset 0 0 0 1px rgba(75,15,30,.14),
+    0 12px 26px rgba(0,0,0,.46);
+}
+::-webkit-scrollbar-thumb:active{
+  background: linear-gradient(180deg, rgba(75,15,30,.72), rgba(75,15,30,.38));
+  border-color: rgba(75,15,30,.46);
+  box-shadow:
+    inset 0 0 0 1px rgba(75,15,30,.20),
+    0 10px 22px rgba(0,0,0,.50);
+}
+::-webkit-scrollbar-corner{ background: rgba(7,8,10,.92); }
+
+/* ===== Motion Preference ===== */
+@media (prefers-reduced-motion: reduce){
+  html:focus-within{ scroll-behavior: auto; }
+  *, *::before, *::after{
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =========================
+   Lenis (recommended CSS)
+   ========================= */
+html.lenis,
+html.lenis body{
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped{
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal]{
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe{
+  pointer-events: none;
+}
+
+.lenis.lenis-autoToggle{
+  transition-property: overflow;
+  transition-duration: 1ms;
+  transition-behavior: allow-discrete;
+}

@@ -1,0 +1,46 @@
+/* src/components/Reveal.module.css */
+.reveal{
+  opacity: 0;
+  transform: translate3d(0, var(--rv-y, 18px), 0) scale(0.995);
+  transition:
+    opacity var(--rv-dur, .66s) ease var(--rv-delay, 0s),
+    transform var(--rv-dur, .66s) cubic-bezier(.16, 1, .3, 1) var(--rv-delay, 0s),
+    filter var(--rv-dur, .66s) ease var(--rv-delay, 0s);
+  will-change: opacity, transform;
+}
+
+/* “像が整う”は任意：重くなるなら0にしてOK */
+.reveal[data-preset="slow"]{
+  filter: blur(.22px);
+}
+
+.reveal[data-inview="1"]{
+  opacity: 1;
+  transform: translate3d(0,0,0) scale(1);
+  filter: blur(0);
+}
+
+/* reduced-motion は最初から見せる */
+@media (prefers-reduced-motion: reduce){
+  .reveal{
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
+/* ✅ 1) wrap: height:100% を外して安定させる */
+.wrap{
+  /* height: 100%; ←これ消す（推奨） */
+  min-height: 320px; /* これはOK（セクション側で上書き） */
+}
+
+/* ✅ 3) img: チラつき防止を追加 */
+.img{
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0); /* 既にあるけど念のためOK */
+}
+
+/* ✅ 2) noVeil / strongVeil の当たり方を安定化 */
+.wrap.noVeil .veil{ opacity: 0; }
+.wrap.strongVeil{ --pm-veilTop: .62; --pm-petrol: .26; }

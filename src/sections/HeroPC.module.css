@@ -1,0 +1,314 @@
+/* src/sections/HeroPC.module.css */
+
+/* =========================
+   HERO — BLACK PAPILLON (PC)
+   - fix: over-constrained image (inset + width/height) → gap bug
+   - fix: duplicated rules (bflyOnLogo / right / riverImg)
+   ========================= */
+
+.hero{
+  min-height: 100svh;
+  background: var(--bg);
+  color: var(--text);
+
+  /* bottomを大幅に増やす */
+  padding: clamp(14px, 2.2vw, 26px) var(--gutter) clamp(96px, 13vw, 250px);
+
+  position: relative;
+  overflow-x: clip;
+  overflow-y: visible;
+  isolation: isolate;
+
+  --bfly-x: clamp(420px, 44vw, 640px);
+  --bfly-y: clamp(70px, 14vh, 165px);
+  --bfly-s: clamp(120px, 10vw, 180px);
+}
+
+/* 背景の深度（黒×petrol） */
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:-22%;
+  background:
+    radial-gradient(900px 600px at 72% 26%, rgba(14,42,47,.34), rgba(7,8,10,0) 62%),
+    radial-gradient(720px 560px at 18% 62%, rgba(14,42,47,.18), rgba(7,8,10,0) 58%);
+  pointer-events:none;
+  z-index: 0;
+}
+
+.stage{
+  max-width: calc(var(--max) + 300px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) minmax(460px, 1fr);
+  gap: clamp(16px, 2.4vw, 44px);
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+
+/* a11y */
+.srOnly{
+  position:absolute;
+  width:1px; height:1px;
+  padding:0; margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+
+/* ===== LEFT ===== */
+.left{
+  padding-top: 0;
+  margin-top: clamp(60px, 12vh, 190px);
+}
+
+.kicker{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--h2-font);
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  font-size: 12px;
+  color: rgba(242,240,234,.78);
+  margin-top: -2px;
+}
+
+.dot{ opacity: .35; }
+
+.logo{
+  position: relative; /* Butterfly anchor */
+  margin: clamp(14px, 1.8vw, 22px) 0 0;
+  line-height: 1;
+}
+
+/* インラインSVG（ロゴ） */
+.logoSvgInline{
+  display:block;
+  width: clamp(380px, 38vw, 820px);
+}
+.logoSvgInline svg{
+  display:block;
+  width:100%;
+  height:auto;
+  overflow: visible;
+}
+
+/* タグライン */
+.tagline{
+  margin-top: clamp(10px, 1.2vw, 14px);
+  color: rgba(242,240,234,.86);
+  font-family: var(--p-font);
+  font-size: 16px;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+}
+
+/* links */
+.links{
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-top: clamp(14px, 1.8vw, 22px);
+}
+
+.link, .linkAccent{
+  font-family: var(--h2-font);
+  letter-spacing: 0.18em;
+  font-weight: 800;
+  font-size: 12px;
+  color: rgba(242,240,234,.86);
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(242,240,234,.16);
+  transition: border-color .18s ease, transform .18s ease, color .18s ease;
+}
+
+.link:hover{
+  border-bottom-color: rgba(242,240,234,.32);
+  transform: translateY(-1px);
+}
+
+.linkAccent{
+  border-bottom-color: rgba(75,15,30,.48);
+}
+.linkAccent:hover{
+  border-bottom-color: rgba(75,15,30,.78);
+  transform: translateY(-1px);
+}
+
+/* note（刻印感） */
+.note{
+  margin-top: clamp(12px, 1.6vw, 20px);
+  color: rgba(242,240,234,.68);
+  font-family: var(--p-font);
+  font-size: 14px;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+
+/* ===== RIGHT ===== */
+.right{
+  position: relative;
+  display: grid;
+  justify-items: end;
+
+  --riverW: clamp(440px, 38vw, 700px);
+  --riverH: clamp(760px, 116vh, 1260px);
+
+  margin-top: clamp(26px, 6vh, 86px);
+}
+
+.river{
+  width: var(--riverW);
+  height: var(--riverH);
+  position: relative;
+  overflow: hidden; /* 額縁 */
+
+  transform: translateX(clamp(18px, 2.6vw, 44px))
+             translateY(clamp(42px, 8vh, 120px));
+
+  background: rgba(242,240,234,.03);
+  border: 1px solid rgba(242,240,234,.10);
+
+  box-shadow:
+    0 22px 70px rgba(0,0,0,.48),
+    0 2px 0 rgba(242,240,234,.06) inset;
+
+  margin-bottom: calc(-1 * clamp(80px, 14vh, 220px));
+  z-index: 2;
+}
+
+.river::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(520px 420px at 65% 22%, rgba(242,240,234,.06), rgba(7,8,10,0) 60%);
+  pointer-events:none;
+}
+
+/* ✅ FIX: over-constrained を排除
+   - inset でサイズを決めるなら width/height は “auto”
+   - これで「左に逃げて右に隙間」が消える
+*/
+/* ✅ riverImg：箱に素直にフィット（ズームはJSでやる） */
+.riverImg{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /* 被写体が右寄りならここで微調整（必要なら） */
+  object-position: 58% 50%;
+
+  transform: translate3d(0,0,0);
+  filter: saturate(0.92) contrast(1.05);
+  will-change: transform, clip-path;
+  max-width: none;
+}
+/* 膜 */
+.riverVeil{
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7,8,10,.52), rgba(7,8,10,.06)),
+    radial-gradient(560px 420px at 70% 30%, rgba(14,42,47,.18), rgba(7,8,10,0) 60%);
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.riverMeta{
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  font-family: var(--h2-font);
+  letter-spacing: 0.20em;
+  font-weight: 800;
+  font-size: 10px;
+  color: rgba(242,240,234,.62);
+}
+
+/* 縦の芯：ただの線じゃなく“気配の線”に */
+.spine{
+  position: absolute;
+  top: -40px;
+  bottom: -260px;
+  right: calc(var(--riverW) / 2);
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(242,240,234,0),
+    rgba(242,240,234,.10),
+    rgba(242,240,234,.06),
+    rgba(242,240,234,0)
+  );
+  transform: translateX(clamp(18px, 2.6vw, 44px));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.footerLine{
+  margin: clamp(18px, 3.2vw, 42px) auto 0;
+  max-width: calc(var(--max) + 300px);
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(242,240,234,0),
+    rgba(242,240,234,.10),
+    rgba(242,240,234,0)
+  );
+  position: relative;
+  z-index: 0;
+}
+
+/* PC専用 */
+@media (max-width: 899px){
+  .hero{ display: none; }
+}
+
+/* =========================
+   BUTTERFLY — base (optional)
+   ========================= */
+
+.bfly{
+  position: absolute;
+  left: var(--bfly-x);
+  top: var(--bfly-y);
+  width: var(--bfly-s);
+  height: auto;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.95;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 18px 44px rgba(0,0,0,.35));
+}
+
+/* =========================
+   BUTTERFLY — on logo (final)
+   ========================= */
+
+.bflyOnLogo{
+  position: absolute;
+
+  /* ロゴ上の位置（最終） */
+  left: clamp(528px, 59.2%, 692px);
+  top: calc(clamp(-10px, -0.5vw, -2px) + 8px);
+
+  width: clamp(56px, 5.2vw, 92px);
+  height: clamp(56px, 5.2vw, 92px); /* 安定 */
+
+  pointer-events: none;
+  z-index: 3;
+
+  opacity: 0.92;
+  mix-blend-mode: normal;
+  filter:
+    brightness(1.18) contrast(1.06)
+    drop-shadow(0 10px 28px rgba(0,0,0,.32))
+    drop-shadow(0 0 16px rgba(242,240,234,.12));
+
+  transform: rotate(-6deg);
+}

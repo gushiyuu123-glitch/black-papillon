@@ -1,0 +1,321 @@
+/* src/sections/Booking.module.css */
+
+.section {
+  position: relative;
+  background: var(--bg);
+  color: var(--text);
+  padding: clamp(150px, 15vw, 240px) 0 clamp(170px, 17vw, 260px);
+  overflow: clip;
+  isolation: isolate;
+  --bk-max: 1520px;
+}
+
+/* 背景（画像） */
+.bgImg {
+  position: absolute;
+  inset: -2%;
+  width: 104%;
+  height: 104%;
+  object-fit: cover;
+  opacity: 0.4;
+  filter: saturate(.90) contrast(1.08) brightness(.72);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  z-index: 0;
+}
+
+/* 画像の上に膜（世界観固定） */
+.bgVeil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(980px 520px at 18% 56%, rgba(0,0,0,.58), rgba(0,0,0,0) 62%),
+    radial-gradient(780px 520px at 72% 46%, rgba(242,240,234,.030), rgba(0,0,0,0) 60%),
+    linear-gradient(180deg, rgba(0,0,0,.62), rgba(0,0,0,.84));
+  z-index: 1;
+}
+
+/* 微細な"織り"の気配（品） */
+.section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(242,240,234,.010) 0px,
+      rgba(242,240,234,.010) 1px,
+      rgba(0,0,0,0) 5px,
+      rgba(0,0,0,0) 12px
+    );
+  opacity: .14;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  max-width: min(var(--bk-max), 94vw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(440px, 1.1fr) 1px minmax(620px, 0.9fr);
+  gap: clamp(46px, 6vw, 120px);
+  align-items: center;
+  min-height: clamp(360px, 27vw, 500px);
+}
+
+/* LEFT */
+.left {
+  position: relative;
+  padding: clamp(18px, 2.2vw, 34px) 0;
+}
+
+.watermark {
+  position: absolute;
+  left: -0.02em;
+  top: clamp(-12px, -1.0vw, -6px);
+  font-family: var(--h1-font);
+  font-size: clamp(56px, 7.6vw, 112px);
+  letter-spacing: 0.28em;
+  color: rgba(242,240,234,.08);
+  opacity: .55;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.kicker {
+  font-family: var(--h1-font);
+  font-size: clamp(34px, 4.2vw, 66px);
+  letter-spacing: 0.46em;
+  line-height: 1;
+  color: rgba(242,240,234,.86);
+  opacity: .92;
+}
+
+.sub {
+  margin-top: 14px;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: rgba(242,240,234,.58);
+}
+
+.leftNote {
+  margin-top: 14px;
+  max-width: 54ch;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  line-height: 1.9;
+  color: rgba(242,240,234,.44);
+}
+
+.leftFade {
+  position: absolute;
+  left: -14%;
+  top: -26%;
+  width: 78%;
+  height: 168%;
+  pointer-events: none;
+  background:
+    radial-gradient(560px 560px at 30% 52%, rgba(0,0,0,.0), rgba(0,0,0,.68) 58%, rgba(0,0,0,0) 100%),
+    radial-gradient(560px 560px at 18% 64%, rgba(242,240,234,.05), rgba(0,0,0,0) 60%);
+  opacity: .50;
+}
+
+/* divider */
+.divider {
+  height: 100%;
+  background: rgba(242,240,234,.10);
+  opacity: .9;
+}
+
+/* RIGHT */
+.right {
+  position: relative;
+  padding: clamp(18px, 2.2vw, 34px) 0;
+}
+
+/* slip（ガラス調） */
+.slip {
+  position: relative;
+  padding: clamp(28px, 2.6vw, 44px);
+  border-radius: 14px;
+  background: rgba(14, 14, 14, .34);
+  border: 1px solid rgba(242,240,234,.14);
+  box-shadow:
+    0 34px 110px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(242,240,234,.08),
+    inset 0 -1px 0 rgba(0,0,0,.35);
+  -webkit-backdrop-filter: blur(6px) saturate(1.05) contrast(1.02);
+  backdrop-filter: blur(6px) saturate(1.05) contrast(1.02);
+}
+
+/* "ガラスの反射"を上に一枚 */
+.slip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 140% at 24% 10%, rgba(242,240,234,.09), rgba(242,240,234,0) 55%),
+    radial-gradient(120% 140% at 80% 92%, rgba(0,0,0,.22), rgba(0,0,0,0) 58%),
+    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 40%);
+  opacity: .95;
+}
+
+.slipTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.slipLabel {
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  color: rgba(242,240,234,.56);
+}
+
+.slipHint {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(242,240,234,.36);
+}
+
+.list {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: baseline;
+  column-gap: 18px;
+}
+
+.no {
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  color: rgba(242,240,234,.34);
+}
+
+.txt {
+  font-size: 13px;
+  letter-spacing: 0.10em;
+  color: rgba(242,240,234,.78);
+}
+
+.note {
+  margin-top: 14px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(242,240,234,.46);
+}
+
+/* CTA：ボタンにしない。線と文字で"合図" */
+.cta {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 18px;
+  width: fit-content;
+  text-decoration: none;
+  font-family: var(--h2-font);
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  color: rgba(242,240,234,.86);
+  opacity: .70;
+  position: relative;
+  padding: 10px 0;
+}
+
+.cta::before,
+.cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(242,240,234,.18), transparent);
+  opacity: .95;
+}
+.cta::before { top: 0; }
+.cta::after  { bottom: 0; }
+
+.cta:hover { opacity: .92; }
+
+.arrow {
+  opacity: .58;
+  transform: translateY(-1px);
+}
+
+/* channels（機能臭を"気配"に落とす） */
+.channelsCap {
+  margin-top: 12px;
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: rgba(242,240,234,.44);
+  opacity: .86;
+}
+
+.channelsRow {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  opacity: .62;
+}
+
+.chLink {
+  font-size: 12px;
+  letter-spacing: .14em;
+  color: rgba(242,240,234,.64);
+  text-decoration: none;
+  opacity: .86;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.chLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 88%;
+  height: 1px;
+  background: rgba(242,240,234,.14);
+}
+
+.chLink:hover { opacity: 1; }
+
+.dot { color: rgba(242,240,234,.22); }
+
+/* セクション終端の気配 */
+.footerLine {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(78px, 7.6vw, 120px);
+  height: 1px;
+  background: rgba(242,240,234,.06);
+}
+
+@media (max-width: 980px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    align-items: start;
+  }
+  .divider  { display: none; }
+  .kicker   { letter-spacing: 0.34em; }
+  .watermark{ letter-spacing: 0.22em; }
+  .slip::before,
+  .slip::after { display: none; }
+}

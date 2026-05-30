@@ -1,0 +1,274 @@
+.section{
+  padding-top: clamp(78px, 8.2vw, 124px);
+  padding-bottom: clamp(620px, 60vw, 980px);
+}
+.inner{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+
+  /* PC-first */
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+  gap: clamp(26px, 4vw, 56px);
+  align-items: start;
+}
+
+/* =======================
+   LEFT : Pillar
+   ======================= */
+.left{
+  position: relative;
+}
+
+.pillar{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 5;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.pillarImg{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(0);
+  filter: saturate(0.98) contrast(1.02);
+}
+
+.pillarVeil{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 120% at 18% 10%, rgba(242,240,234,.06), transparent 58%),
+    linear-gradient(180deg, rgba(7,8,10,.08), rgba(7,8,10,.52));
+  pointer-events: none;
+}
+
+/* =======================
+   RIGHT : Head
+   ======================= */
+.right{
+  position: relative;
+  padding-top: clamp(6px, 1.2vw, 14px);
+}
+
+.head{
+  max-width: 860px;
+}
+
+.kicker{
+  font-size: 12px;
+  letter-spacing: 0.34em;
+  color: var(--faint);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.kicker::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 22px;
+  height: 1px;
+  background: rgba(242,240,234,.18);
+}
+
+.title{
+  margin: 18px 0 0;
+  font-family: var(--h1-font);
+  font-weight: 500;
+  font-size: clamp(30px, 2.5vw, 44px);
+  letter-spacing: 0.06em;
+  line-height: 1.18;
+  color: var(--text);
+}
+
+.lead{
+  margin-top: 14px;
+  max-width: 62ch;
+  color: var(--muted);
+}
+
+/* =======================
+   3 Frames (not “cards”)
+   ======================= */
+.grid{
+  margin-top: clamp(28px, 4.4vw, 56px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2.4vw, 22px);
+  align-items: start;
+}
+
+.card{
+  position: relative;
+}
+
+/* 画像枠 */
+.frame{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: 0 14px 44px rgba(0,0,0,.40);
+}
+
+.frameImg{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateZ(0);
+  filter: saturate(0.96) contrast(1.03);
+}
+
+.frameVeil{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 120% at 20% 10%, rgba(242,240,234,.07), transparent 60%),
+    linear-gradient(180deg, rgba(7,8,10,.06), rgba(7,8,10,.48));
+  pointer-events: none;
+}
+
+/* テキスト部（“下に積む”が、カード感を出さない） */
+.meta{
+  margin-top: 14px;
+}
+
+.cardTitle{
+  font-family: var(--h2-font);
+  font-size: 12px;
+  letter-spacing: 0.30em;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.rule{
+  margin-top: 10px;
+  width: 18px;
+  height: 1px;
+  background: rgba(242,240,234,.16);
+}
+
+.copy{
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+.copy span{
+  display: block;
+}
+
+.word{
+  margin-top: 18px;
+  font-size: 10px;
+  letter-spacing: 0.36em;
+  color: rgba(242,240,234,.22);
+}
+
+/* 右端だけ少し“静か”に */
+.card:nth-child(3) .frameImg{
+  filter: saturate(0.92) contrast(1.02);
+}
+
+/* 下の薄いライン */
+.hairline{
+  margin-top: clamp(34px, 5vw, 64px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+/* =======================
+   Narrow fallback（SPは最後方針でも最低限の事故回避）
+   ======================= */
+@media (max-width: 980px){
+  .inner{
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .pillar{
+    aspect-ratio: 16 / 10; /* 破綻回避。PC柱は保持しつつ横に逃がす */
+  }
+
+  .grid{
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+/* ====== POWER PATCH (STYLE) ====== */
+
+/* 1) 縦間をちょい詰める（迫力=密度） */
+.section{
+  padding: clamp(78px, 8.2vw, 124px) 0;
+}
+
+/* 2) このセクションだけ“舞台”を少し広げる（迫力=画面を使う） */
+.inner{
+  max-width: min(1320px, 100%); /* 1180 -> 1320 */
+  grid-template-columns: minmax(320px, 500px) minmax(0, 1fr); /* 左を強く */
+  gap: clamp(22px, 3.2vw, 46px); /* 余白を少し締める */
+}
+
+/* 3) 左柱を“箱の外”へ少し逃がす（迫力=破綻を意図に変える） */
+.left{
+  margin-left: calc(var(--gutter) * -0.85);
+}
+
+/* 柱を少しだけデカく / 引きを保ったまま存在感を上げる */
+.pillar{
+  aspect-ratio: 3 / 5.35; /* 3/5 -> 少しだけ縦感 */
+}
+
+.pillarImg{
+  transform: translateZ(0) scale(1.02); /* ほんの少しだけ寄せる */
+}
+
+/* 4) 右の3枚を少し詰めて“塊”にする（迫力=面積と密度） */
+.grid{
+  margin-top: clamp(22px, 3.8vw, 48px); /* 56 -> ちょい詰め */
+  gap: clamp(12px, 2vw, 18px);          /* 22 -> ちょい詰め */
+}
+
+/* 影を少し強めて“展示感”を上げる */
+.frame{
+  box-shadow: 0 18px 60px rgba(0,0,0,.46);
+}
+
+/* 下ラインの余白も少し詰める */
+.hairline{
+  margin-top: clamp(28px, 4.4vw, 56px);
+}
+
+/* 狭幅では逃がしを戻す（事故防止） */
+@media (max-width: 980px){
+  .left{ margin-left: 0; }
+  .pillarImg{ transform: translateZ(0); }
+}
+@media (min-width: 980px){
+  .right{
+    /* もうすこし右 */
+    --shift: clamp(18px, 2.0vw, 32px);
+    padding-left: var(--shift);
+  }
+
+  .hairline{
+    margin-left: var(--shift);
+    width: calc(100% - var(--shift));
+  }
+}
+/* optional: Reveal wrapper safety */
+.pillarReveal,
+.cardReveal{
+  display: block;
+  width: 100%;
+}

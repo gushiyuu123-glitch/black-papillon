@@ -1,0 +1,106 @@
+.header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 80;
+
+  /* JSが走る前のチラ見え防止 */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0,-10px,0);
+  pointer-events: none;
+  will-change: transform, opacity;
+
+  /* 線なし。膜だけ */
+  background: linear-gradient(
+    180deg,
+    rgba(7,8,10,.62) 0%,
+    rgba(7,8,10,.22) 70%,
+    rgba(7,8,10,0) 100%
+  );
+}
+
+.inner{
+  position: relative;
+  height: clamp(92px, 7.2vw, 120px);
+  padding: 0 var(--gutter);
+}
+
+/* ロゴ中心を25%地点に固定 */
+.logoStage{
+  position: absolute;
+  left: var(--hd-left, 25%);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+.logoLink{
+  position: relative;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+}
+
+.logo{
+  width: clamp(300px, 24vw, 430px);
+  height: auto;
+  display: block;
+  opacity: 0.8;
+}
+
+/* 蝶：右に少し、角度つき */
+.bfly{
+  position: absolute;
+  right: clamp(-50px, -2.7vw, -32px);
+  top: clamp(-16px, -1vw, -8px);
+
+  width: clamp(30px, 2.55vw, 49px);
+  height: clamp(30px, 2.55vw, 49px);
+
+  opacity: 0.76;
+  transform: rotate(14deg);
+  transform-origin: 50% 50%;
+  pointer-events: none;
+  user-select: none;
+}
+.nav{
+  position: absolute;
+  right: var(--gutter);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: clamp(16px, 1.8vw, 26px);
+
+  pointer-events: auto;
+  opacity: 0.52; /* ← “機能”じゃなく気配 */
+}
+
+.navItem{
+  display: grid;
+  place-items: center;
+  padding: 10px 8px; /* 見た目より当たり判定広く */
+  text-decoration: none;
+}
+
+.navItem:hover{ opacity: 0.9; }
+
+.navItem:focus-visible{
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.navSvg{
+  height: clamp(10px, 1.0vw, 14px);
+  width: auto;
+  display: block;
+  opacity: 0.92;
+}
+/* 右ナビを “気配” にする */
+.nav{ opacity: 0.48; }
+.navSvg{ height: clamp(9px, .92vw, 13px); opacity: 0.86; }
+.navItem:hover{ opacity: 0.75; } /* hoverで主張しすぎない */
+.nav{
+  top: calc(50% - 9px);
+}

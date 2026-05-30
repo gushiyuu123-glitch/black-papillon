@@ -1,0 +1,207 @@
+/* src/sections/Care.module.css */
+.section {
+  position: relative;
+  padding: clamp(120px, 13vw, 180px) 0 clamp(110px, 12vw, 160px);
+  overflow: hidden;
+}
+/* ✅ 背景画像（フルワイド） */
+.section::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--care-bg);
+  background-size: cover;
+  background-position: 28% 50%;
+  opacity: .22;
+  transform: scale(1.04);
+  filter: saturate(.92) contrast(1.05);
+  pointer-events: none;
+}
+
+/* ✅ 文字可読性のためのベール（右側が少し濃い） */
+.section::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 120% at 18% 18%, rgba(242,240,234,.04), transparent 56%),
+    linear-gradient(90deg,
+      rgba(7,8,10,.82) 0%,
+      rgba(7,8,10,.72) 38%,
+      rgba(7,8,10,.78) 100%
+    );
+  pointer-events: none;
+}
+
+.inner{
+  position: relative;
+  z-index: 2;
+
+  max-width: min(1320px, 100%);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+
+  display: grid;
+  grid-template-columns: minmax(320px, 520px) minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 44px);
+  align-items: start;
+}
+
+/* =======================
+   LEFT
+   ======================= */
+.left{
+  position: relative;
+  margin-left: calc(var(--gutter) * -0.75);
+}
+
+.head{
+  max-width: 46ch;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(242,240,234,.10);
+}
+
+.kicker{
+  font-size: 11px;
+  letter-spacing: 0.30em;
+  color: rgba(242,240,234,.42);
+  display: inline-block;
+}
+
+/* ✅ タイトルは“規約の見出し”に落とす（テンプレ臭を殺す） */
+.title{
+  margin: 14px 0 0;
+  font-family: var(--h2-font);
+  font-weight: 650;
+  font-size: clamp(20px, 1.55vw, 26px);
+  letter-spacing: 0.02em;
+  line-height: 1.28;
+  color: var(--text);
+}
+
+.lead{
+  margin-top: 12px;
+  max-width: 52ch;
+  color: rgba(242,240,234,.66);
+}
+
+/* =======================
+   RIGHT
+   ======================= */
+.right{
+  position: relative;
+  padding-top: 0;
+}
+
+/* ✅ 右側の帳簿にだけ、さらに薄い“幕”を足す（箱には見せない） */
+.right::before{
+  content: "";
+  position: absolute;
+  inset: -18px -18px -18px -18px;
+  background: linear-gradient(90deg,
+    rgba(7,8,10,.00) 0%,
+    rgba(7,8,10,.22) 28%,
+    rgba(7,8,10,.30) 100%
+  );
+  pointer-events: none;
+}
+
+.ledgers{
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.8vw, 18px);
+  align-items: start;
+}
+
+.ledger{
+  position: relative;
+  padding: 0;
+}
+
+.ledgerHead{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(242,240,234,.14);
+}
+
+.ledgerTitle{
+  font-family: var(--h2-font);
+  font-size: 12px;
+  letter-spacing: 0.30em;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.ledgerNote{
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: rgba(242,240,234,.45);
+}
+
+.dl{ margin-top: 12px; }
+
+.row{
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(242,240,234,.10);
+}
+
+.row:last-child{ border-bottom: 0; }
+
+.dt{
+  font-size: 12px;
+  letter-spacing: 0.10em;
+  color: rgba(242,240,234,.78);
+}
+
+.dd{
+  margin: 0;
+  color: var(--muted);
+}
+
+/* フィルタ */
+.promise{
+  position: relative;
+  margin-top: clamp(18px, 2.6vw, 26px);
+  padding-top: 14px;
+  border-top: 1px solid rgba(242,240,234,.10);
+  color: rgba(242,240,234,.78);
+  letter-spacing: 0.04em;
+}
+
+.hairline{
+  position: relative;
+  margin-top: clamp(26px, 4.2vw, 52px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+/* =======================
+   Narrow fallback
+   ======================= */
+@media (max-width: 980px){
+  .inner{
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .left{ margin-left: 0; }
+
+  .right::before{
+    inset: -14px -10px -14px -10px;
+  }
+
+  .ledgers{
+    grid-template-columns: 1fr;
+  }
+
+  .row{
+    grid-template-columns: 78px minmax(0, 1fr);
+  }
+}
