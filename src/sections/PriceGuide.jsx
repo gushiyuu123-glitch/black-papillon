@@ -10,13 +10,13 @@ const BF_DIR = "/type";
 // 数字は仮。あとで差し替え
 const TIERS = [
   { key: "one", name: "ワンポイント", price: "¥18,000〜", sessions: "1回", note: "" },
-  { key: "std", name: "標準", price: "¥45,000〜¥95,000", sessions: "1–2回", note: "" },
+  { key: "std", name: "標準", price: "¥45,000〜¥95,000", sessions: "1〜2回", note: "" },
   {
     key: "cover",
     name: "大きめ / カバー",
     price: "要相談",
-    sessions: "分けて進行",
-    note: "カバーは状態で変わるので、見て決めます。",
+    sessions: "複数回",
+    note: "カバーは状態を見て決めます。",
   },
 ];
 
@@ -48,52 +48,38 @@ export default function PriceGuide() {
                   ariaLabel="PRICE GUIDE"
                 />
 
-      <Butterfly
-  triggerRef={sectionRef}
-  className={styles.bflyOnTitle}
-  dir={BF_DIR}
-
-  // ✅ スクロール連動は“重く”して滑らかに
-  scrub={1.35}
-
-  // ✅ 羽ばたき周期を落として“生き物”に
-  cycles={0.56}
-
-  // ✅ 透明度は少し落として気配に
-  alpha={0.74}
-
-  // ✅ 揺れ幅を減らす（大きいと玩具っぽい）
-  drift={{ x: 7, y: 11, rot: 2 }}
-
-  // ✅ 慣性を少し増やす（ヌルっと遅れて追従）
-  driftScrub={1.05}
-
-  // ✅ 入りは気配→像が整う
-  introDelay={0.28}
-  introDur={0.48}
-
-  disabledOnCoarse={true}
-
-  // ✅ hoverは“短くパタパタ”じゃなく“ふわっ”
-  flapOnHover={true}
-  hoverScopeRef={sectionRef}
-  hoverSelector="[data-bfly-flap]"
-  hoverDur={0.74}
-  hoverCooldown={0.55}
-/>
+                {/* ✅ 自然寄り（“追従は軽く、揺れは小さく、出方は速め”） */}
+                <Butterfly
+                  triggerRef={sectionRef}
+                  className={styles.bflyOnTitle}
+                  dir={BF_DIR}
+                  scrub={1.05}
+                  cycles={0.72}
+                  alpha={0.78}
+                  drift={{ x: 10, y: 16, rot: 3 }}
+                  driftScrub={0.90}
+                  introDelay={0.22}
+                  introDur={0.34}
+                  disabledOnCoarse={true}
+                  flapOnHover={true}
+                  hoverScopeRef={sectionRef}
+                  hoverSelector="[data-bfly-flap]"
+                  hoverDur={0.62}
+                  hoverCooldown={0.42}
+                />
               </div>
             </Reveal>
           </div>
 
           <Reveal preset="base" y={12} delay={0.05}>
             <p className={styles.lead}>
-              金額は下絵が決まってから確定します。サイズと密度で前後します。
+              料金は下絵が決まってから確定します。サイズと密度で前後します。
             </p>
           </Reveal>
 
           <Reveal preset="base" y={12} delay={0.08}>
             <p className={styles.how}>
-              決まり方：サイズ / 密度（線の量・影） / 回数（分けて進めるか）
+              決まり方：サイズ / 密度（線と影の量） / 回数（分けて進めるか）
             </p>
           </Reveal>
         </header>
@@ -101,7 +87,12 @@ export default function PriceGuide() {
         {/* 3ティア：左→右で順番に出す */}
         <div className={styles.tiers} role="list" aria-label="Price tiers">
           {TIERS.map((t, i) => (
-            <article key={t.key} className={styles.tier} role="listitem" data-bfly-flap>
+            <article
+              key={t.key}
+              className={styles.tier}
+              role="listitem"
+              data-bfly-flap
+            >
               <Reveal preset="base" y={18} delay={0.10 + i * 0.09}>
                 <div className={styles.tierTop}>
                   <p className={styles.tierName}>{t.name}</p>
@@ -125,7 +116,7 @@ export default function PriceGuide() {
           <div className={styles.adjust}>
             <p className={styles.adjustTitle}>微調整（目安：1ヶ月）</p>
             <p className={styles.adjustText}>
-              施術後1ヶ月を目安に一度確認します。必要がある場合は微調整をご案内します。
+              施術後1ヶ月を目安に一度確認します。必要な場合は微調整をご案内します。
             </p>
             <p className={styles.adjustFoot}>
               ※アフターケアを守っていただいた場合に限ります。

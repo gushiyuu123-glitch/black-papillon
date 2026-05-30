@@ -16,7 +16,7 @@ const TEL = "090-0000-0000"; // 仮
 const SEND = [
   { no: "01", text: "部位 / だいたいのサイズ" },
   { no: "02", text: "参考（画像 or URL）" },
-  { no: "03", text: "希望時期（いつ頃）" },
+  { no: "03", text: "希望時期" },
 ];
 
 export default function Booking() {
@@ -40,11 +40,15 @@ export default function Booking() {
       return;
     }
 
-    const BG_Y = 10; // ← “見える”程度に効かせる
+    const BG_Y = 10; // “見える”程度に効かせる
     const BG_SCALE = 1.12;
 
     const ctx = gsap.context(() => {
-      gsap.set(bg, { yPercent: -BG_Y, scale: BG_SCALE, willChange: "transform" });
+      gsap.set(bg, {
+        yPercent: -BG_Y,
+        scale: BG_SCALE,
+        willChange: "transform",
+      });
 
       gsap.to(bg, {
         yPercent: BG_Y,
@@ -96,14 +100,13 @@ export default function Booking() {
           </Reveal>
 
           <Reveal preset="base" y={14} delay={0.05}>
-            <p className={styles.sub}>予約は、相談から。</p>
+            <p className={styles.sub}>まずイメージだけ送ってください。</p>
           </Reveal>
 
           <Reveal preset="base" y={12} delay={0.09}>
-            <p className={styles.leftNote}>
-              下絵が決まってから、金額と日程を確定します。
-              まずはイメージだけで大丈夫です。
-            </p>
+     <p className={styles.leftNote}>
+  下絵が決まってから、金額と日程を確定します。
+</p>
           </Reveal>
 
           <div className={styles.leftFade} aria-hidden="true" />
@@ -123,7 +126,12 @@ export default function Booking() {
 
               <div className={styles.list} role="list" aria-label="送る内容">
                 {SEND.map((it, i) => (
-                  <Reveal key={it.no} preset="base" y={10} delay={0.10 + i * 0.04}>
+                  <Reveal
+                    key={it.no}
+                    preset="base"
+                    y={10}
+                    delay={0.10 + i * 0.04}
+                  >
                     <div className={styles.row} role="listitem">
                       <span className={styles.no}>{it.no}</span>
                       <span className={styles.txt}>{it.text}</span>
@@ -144,13 +152,16 @@ export default function Booking() {
                   rel="noreferrer"
                   aria-label="Instagramで相談する"
                 >
-                  相談する <span className={styles.arrow} aria-hidden="true">→</span>
+                  相談する{" "}
+                  <span className={styles.arrow} aria-hidden="true">
+                    →
+                  </span>
                 </a>
               </Reveal>
 
               <Reveal preset="base" y={8} delay={0.30}>
                 <p className={styles.channelsCap}>
-                  InstagramのDMが早いです。電話・メールでも受け付けています。
+                  InstagramのDMが一番早いです。メール・電話でも受け付けています。
                 </p>
               </Reveal>
 
@@ -164,11 +175,15 @@ export default function Booking() {
                   >
                     Instagram
                   </a>
-                  <span className={styles.dot} aria-hidden="true">/</span>
+                  <span className={styles.dot} aria-hidden="true">
+                    /
+                  </span>
                   <a className={styles.chLink} href={`mailto:${EMAIL}`}>
                     {EMAIL}
                   </a>
-                  <span className={styles.dot} aria-hidden="true">/</span>
+                  <span className={styles.dot} aria-hidden="true">
+                    /
+                  </span>
                   <a className={styles.chLink} href={telHref}>
                     {TEL}
                   </a>

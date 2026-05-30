@@ -6,11 +6,7 @@ const HEALED_IMG = "/healed/healed-04.png"; // publicに置いて差し替え
 
 export default function Healed() {
   return (
-    <section
-      id="healed"
-      className={styles.section}
-      aria-labelledby="healed-label"
-    >
+    <section id="healed" className={styles.section} aria-labelledby="healed-label">
       <div className={styles.inner}>
         <header className={styles.head}>
           <Reveal preset="base" y={12}>
@@ -25,27 +21,14 @@ export default function Healed() {
         </header>
 
         <div className={styles.center}>
-          <Reveal
-            as="p"
-            className={styles.statement}
-            preset="base"
-            y={14}
-            delay={0.08}
-          >
-            <span className={styles.l1}>決め手は治癒後。</span>
-            <span className={styles.l2}>
-              時間が経っても線が崩れにくいように、
-            </span>
-            <span className={styles.l3}>引き方まで決めてから描いています。</span>
+          <Reveal as="p" className={styles.statement} preset="base" y={14} delay={0.08}>
+            <span className={styles.l1}>仕上がりの基準は治癒後。</span>
+            <span className={styles.l2}>時間が経っても線が崩れにくいよう、</span>
+            <span className={styles.l3}>引き方まで確認してから描いています。</span>
           </Reveal>
 
-          {/* ✅ “箱”を消して、結果の証拠として1枚だけ置く（CAREと役割を分ける） */}
-          <Reveal
-            className={styles.sampleReveal}
-            preset="slow"
-            y={18}
-            delay={0.14}
-          >
+          {/* 証拠：1枚だけ置く */}
+          <Reveal className={styles.sampleReveal} preset="slow" y={18} delay={0.14}>
             <figure className={styles.sample} aria-label="治癒後サンプル">
               <img
                 className={styles.sampleImg}

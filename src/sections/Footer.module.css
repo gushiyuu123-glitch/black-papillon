@@ -7,23 +7,82 @@
   padding: clamp(120px, 12vw, 180px) 0 clamp(60px, 6vw, 90px);
   overflow: clip;
   isolation: isolate;
+
+  /* 調整ノブ */
+  --ft-bg-opacity: .26;     /* ← 画像の存在感（大きすぎる問題はまずここ） */
+  --ft-bg-size: min(980px, 62vw); /* ← 画像のサイズ（“浮遊パネル”の大きさ） */
 }
 
+/* 背景画像（枠なしで“浮かぶ”） */
+.bgWrap{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bgImg{
+  position: absolute;
+  right: clamp(-40px, -3vw, -16px);
+  top: 52%;
+
+  width: var(--ft-bg-size);
+  aspect-ratio: 16 / 9;
+  height: auto;
+
+  object-fit: cover;
+  object-position: 64% 46%;
+
+  opacity: var(--ft-bg-opacity);
+  filter: grayscale(1) contrast(1.08) brightness(.78) saturate(.92);
+
+  /* “枠がない滲み” */
+  -webkit-mask-image: radial-gradient(66% 78% at 48% 50%, #000 0 46%, rgba(0,0,0,.0) 78%);
+  mask-image: radial-gradient(66% 78% at 48% 50%, #000 0 46%, rgba(0,0,0,.0) 78%);
+
+  /* “浮遊”の輪郭を消す */
+  box-shadow: 0 40px 120px rgba(0,0,0,.52);
+
+  transform: translate3d(0, -50%, 0);
+  backface-visibility: hidden;
+}
+
+/* 黒い空間の“膜”で統合（画像が浮きすぎない） */
 .footer::before{
   content:"";
   position:absolute;
   inset:-2%;
+  z-index: 1;
   pointer-events:none;
   background:
     radial-gradient(980px 520px at 18% 56%, rgba(0,0,0,.62), rgba(0,0,0,0) 62%),
-    radial-gradient(740px 560px at 76% 36%, rgba(242,240,234,.028), rgba(0,0,0,0) 60%),
-    radial-gradient(120% 120% at 50% 55%, rgba(0,0,0,0), rgba(0,0,0,.46) 78%, rgba(0,0,0,.70) 100%);
-  opacity: .96;
+    radial-gradient(760px 560px at 78% 44%, rgba(242,240,234,.030), rgba(0,0,0,0) 62%),
+    radial-gradient(120% 120% at 50% 55%, rgba(0,0,0,0), rgba(0,0,0,.46) 78%, rgba(0,0,0,.72) 100%);
+  opacity: .98;
+}
+
+/* 微細な織り（やりすぎない） */
+.footer::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index: 1;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(242,240,234,.012) 0px,
+      rgba(242,240,234,.012) 1px,
+      rgba(0,0,0,0) 5px,
+      rgba(0,0,0,0) 12px
+    );
+  opacity:.16;
+  mix-blend-mode: overlay;
 }
 
 .inner{
   position: relative;
-  z-index: 1;
+  z-index: 2;
   max-width: min(var(--max), 92vw);
   margin: 0 auto;
   padding: 0 var(--gutter);
@@ -41,21 +100,23 @@
   width: fit-content;
 }
 
+/* フッターのロゴは“封印” */
 .logo{
-  width: clamp(320px, 22vw, 440px);
+  width: clamp(280px, 19vw, 380px);
   height: auto;
   display: block;
-  opacity: .30; /* “封印” */
+  opacity: .20;
 }
 
+/* b1：もっと下（ヘッダーが主役） */
 .bfly{
   position: absolute;
   right: clamp(-52px, -2.8vw, -34px);
-  top: clamp(-14px, -1vw, -8px);
+  top: clamp(-20px, -1.4vw, -12px);
   width: clamp(30px, 2.4vw, 46px);
   height: clamp(30px, 2.4vw, 46px);
-  opacity: .52;
-  transform: rotate(12deg);
+  opacity: .50;
+  transform: rotate(12deg) translateY(6px);
   pointer-events: none;
   user-select: none;
 }
@@ -75,9 +136,7 @@
   border-top: 1px solid rgba(242,240,234,.06);
 }
 
-.block{
-  min-width: 0;
-}
+.block{ min-width: 0; }
 
 .h{
   font-size: 11px;
@@ -108,9 +167,7 @@
   align-items: baseline;
 }
 
-.sep{
-  color: rgba(242,240,234,.20);
-}
+.sep{ color: rgba(242,240,234,.20); }
 
 .link{
   font-size: 12px;
@@ -134,6 +191,14 @@
 
 .link:hover{ opacity: 1; }
 
+.rowSub{
+  margin-top: 10px;
+  opacity: .42;
+  filter: saturate(.9);
+}
+.rowSub .link{ opacity: .78; }
+.rowSub .link:hover{ opacity: 1; }
+
 /* BOTTOM */
 .bottom{
   margin-top: clamp(44px, 4.6vw, 72px);
@@ -141,7 +206,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 16px;
-  opacity: .62; /* “気配” */
+  opacity: .62;
 }
 
 .copy{
@@ -163,6 +228,8 @@
 .cred:hover{ opacity: 1; }
 
 .hairline{
+  position: relative;
+  z-index: 2;
   margin-top: clamp(30px, 3.6vw, 56px);
   height: 1px;
   background: rgba(242,240,234,.05);
@@ -178,36 +245,122 @@
     flex-direction: column;
     align-items: flex-start;
   }
+
+  /* SPは背景が強く見えやすいので弱める */
+  .footer{ --ft-bg-opacity: .18; --ft-bg-size: min(860px, 110vw); }
+  .bgImg{
+    right: -18vw;
+    top: 58%;
+    object-position: 68% 48%;
+  }
 }
-.rowSub{
-  margin-top: 10px;
-  opacity: .42;      /* 気配 */
-  filter: saturate(.9);
-}
-.rowSub .link{
-  opacity: .78;      /* hoverしても主張しすぎない */
-}
-.rowSub .link:hover{
-  opacity: 1;
-}
-/* ロゴ：ヘッダーが主役なので、フッターは気配まで落とす */
-.logo{
-  width: clamp(280px, 19vw, 380px);
-  height: auto;
-  display: block;
-  opacity: .20;
+/* Footer.module.css 例：右下だけに“浮かぶ”背景 */
+.footer{
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.bfly{
-  position: absolute;
-  right: clamp(-52px, -2.8vw, -34px);
-  top: clamp(-20px, -1.4vw, -12px);
-
-  width: clamp(30px, 2.4vw, 46px);
-  height: clamp(30px, 2.4vw, 46px);
-
-  opacity: .50;
-  transform: rotate(12deg) translateY(5px); /* ←下げる */
+/* ✅ 右下の写真レイヤー（主役にしない） */
+.footer::before{
+  content:"";
+  position:absolute;
+  inset: -6% -6% -10% -6%;
+  background: url("/ogp-bg.jpg") right 32% / cover no-repeat; /* ←画像パス */
+  opacity: .18;                 /* まずはここが命 */
+  filter: blur(0.6px) contrast(1.05) saturate(.92) brightness(.85);
+  transform: translate3d(0,0,0) scale(1.02);
   pointer-events: none;
-  user-select: none;
+  z-index: 0;
+
+  /* ✅ 境界を“溶かす”（左・上は消す） */
+  -webkit-mask-image:
+    radial-gradient(900px 720px at 86% 62%, #000 0%, #000 45%, transparent 74%),
+    linear-gradient(90deg, transparent 0%, #000 42%, #000 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(900px 720px at 86% 62%, #000 0%, #000 45%, transparent 74%),
+    linear-gradient(90deg, transparent 0%, #000 42%, #000 100%);
+  mask-composite: intersect;
 }
+
+/* ✅ 文字の可読を守る“黒い膜”（中央は強め） */
+.footer::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(1200px 720px at 38% 62%, rgba(7,8,10,.86), rgba(7,8,10,0) 62%),
+    radial-gradient(900px 700px at 88% 62%, rgba(7,8,10,.45), rgba(7,8,10,0) 65%),
+    linear-gradient(180deg, rgba(7,8,10,.80), rgba(7,8,10,.66));
+  pointer-events:none;
+  z-index: 1;
+}
+
+/* ✅ 中身は上に */
+.inner{ position: relative; z-index: 2; }
+/* Footer.module.css（背景“漂わせ”最終版） */
+
+.footer{
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+
+  /* ツマミ（ここだけ触れば世界観保ったまま調整できる） */
+  --ft-bg: url("/footer-bg.webp"); /* ← ここを実ファイル名に */
+  --ft-bg-opacity: .18;
+  --ft-bg-size: clamp(520px, 44vw, 820px); /* ← “窮屈”に感じたら少しだけ増やす */
+  --ft-bg-x: 76%;
+  --ft-bg-y: 64%;
+}
+
+/* 背景画像：右奥に“漂わせる”（cover禁止） */
+.footer::before{
+  content:"";
+  position:absolute;
+  inset:-6%;
+  pointer-events:none;
+
+  background-image: var(--ft-bg);
+  background-repeat: no-repeat;
+  background-position: var(--ft-bg-x) var(--ft-bg-y);
+  background-size: var(--ft-bg-size);
+
+  opacity: var(--ft-bg-opacity);
+
+  /* 生々しさを落として“気配”に */
+  filter: grayscale(1) contrast(1.06) brightness(.78);
+
+  /* 枠を消す：滲ませマスク */
+  -webkit-mask-image: radial-gradient(
+    62% 72% at var(--ft-bg-x) 52%,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 40%,
+    rgba(0,0,0,0) 74%
+  );
+  mask-image: radial-gradient(
+    62% 72% at var(--ft-bg-x) 52%,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 40%,
+    rgba(0,0,0,0) 74%
+  );
+
+  transform: translateZ(0);
+}
+
+/* 読ませるための黒膜（強すぎない） */
+.footer::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+
+  background:
+    radial-gradient(900px 560px at 42% 62%, rgba(0,0,0,.18), rgba(0,0,0,0) 60%),
+    radial-gradient(120% 120% at 50% 55%, rgba(0,0,0,0), rgba(0,0,0,.56) 78%, rgba(0,0,0,.72) 100%),
+    linear-gradient(180deg, rgba(7,8,10,.86) 0%, rgba(7,8,10,.52) 45%, rgba(7,8,10,.90) 100%);
+  z-index: 1;
+}
+
+/* 中身は必ず上に */
+.inner{ position: relative; z-index: 2; }

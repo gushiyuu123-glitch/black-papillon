@@ -6,16 +6,16 @@ import Reveal from "../components/Reveal";
 const PROOF_IMG = "/care/care-proof.png"; // publicに置いて差し替え
 
 const PROCESS = [
-  ["予約", "部位 / サイズ / イメージを送る（短くでOK）"],
-  ["下絵確認", "当日、線と配置を決める（止められる）"],
-  ["施術", "休憩しながら進める（無理はしない）"],
-  ["ケア", "当日〜数日分だけ、やることを渡す"],
+  ["予約", "部位 / サイズ / イメージを送る（短くてOK）"],
+  ["下絵確認", "当日、線と配置を決める（ここで止められます）"],
+  ["施術", "休憩を挟みながら進めます"],
+  ["ケア", "当日から数日分の手順をお渡しします"],
 ];
 
 const SAFETY = [
-  ["使い捨て", "針・手袋・消耗品は都度交換"],
+  ["使い捨て", "針・手袋・消耗品は毎回交換"],
   ["清潔", "接触面は施術ごとに拭き上げ"],
-  ["肌", "状態が悪い日は、やらない"],
+  ["肌", "状態が悪い日は施術を行いません"],
   ["NG", "飲酒 / 体調不良 / 日焼け直後は不可"],
 ];
 
@@ -38,12 +38,12 @@ export default function Care() {
             </Reveal>
 
             <Reveal preset="base" y={14}>
-             <h2 className={styles.title}>当日の流れと清潔。</h2>
+              <h2 className={styles.title}>当日の流れと清潔基準</h2>
             </Reveal>
 
             <Reveal preset="base" y={14}>
      <p className={styles.lead}>
-  当日の流れと、清潔の基準をまとめました。必要なことだけ。
+  当日の流れと、清潔の基準をまとめました。
 </p>
             </Reveal>
           </header>
@@ -100,7 +100,7 @@ export default function Care() {
 
           <Reveal preset="base" y={12} delay={0.12}>
             <p className={styles.promise}>
-              約束：指示を守れない人は、お断りします。
+              ケアの指示を守れない方は、お断りします。
             </p>
           </Reveal>
 

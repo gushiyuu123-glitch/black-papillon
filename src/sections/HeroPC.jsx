@@ -145,30 +145,30 @@ export default function HeroPC() {
             <span className={styles.srOnly}>BLACK PAPILLON</span>
 
             <LogoSvgReveal src={LOGO_SRC} className={styles.logoSvgInline} />
-
-            <Butterfly
-              triggerRef={heroRef}
-              className={styles.bflyOnLogo}
-              dir="/type"
-              scrub={1.25}
-              cycles={0.62}
-              alpha={0.76}
-              drift={{ x: 10, y: 16, rot: 3 }}
-              driftScrub={0.98}
-              introDelay={0.32}
-              introDur={0.5}
-              disabledOnCoarse={true}
-              flapOnHover={true}
-              hoverScopeRef={heroRef}
-              hoverSelector="[data-bfly-flap]"
-              hoverDur={0.7}
-              hoverCooldown={0.55}
-            />
+<Butterfly
+  triggerRef={heroRef}
+  className={styles.bflyOnLogo}
+  dir="/type"
+  scrub={1.05}          // 1.25 → 1.05（追従を自然に）
+  cycles={0.72}         // 0.62 → 0.72（羽ばたきの“生っぽさ”）
+  alpha={0.82}          // 0.76 → 0.82（気配を戻すなら）
+  drift={{ x: 10, y: 16, rot: 3 }}
+  driftScrub={0.85}     // 0.98 → 0.85（driftの追従を緩める）
+  introDelay={0.22}     // 0.32 → 0.22（出番を早める）
+  introDur={0.34}       // 0.50 → 0.34（“ぬるっ”を消す）
+  disabledOnCoarse={true}
+  flapOnHover={true}
+  hoverScopeRef={heroRef}
+  hoverSelector="[data-bfly-flap]"
+  hoverDur={0.62}       // 0.70 → 0.62（気持ち良い帯）
+  hoverCooldown={0.42}  // 0.55 → 0.42（反応が鈍い感じを消す）
+/>
           </h1>
-
-          <p className={styles.tagline} data-hero-item>
-            Made to Last.
-          </p>
+<p className={styles.note} data-hero-item>
+  Carve Beauty.
+  <br />
+  美を刻む。
+</p>
 
           <div className={styles.links} aria-label="Primary links" data-hero-item>
             <a className={styles.link} href="#works" data-bfly-flap>
@@ -182,11 +182,7 @@ export default function HeroPC() {
             </a>
           </div>
 
-          <p className={styles.note} data-hero-item>
-            Carve Beauty.
-            <br />
-            美を刻む。
-          </p>
+
         </div>
 
         <div className={styles.right} aria-label="Hero visual">

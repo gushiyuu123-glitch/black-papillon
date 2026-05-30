@@ -14,7 +14,7 @@ const STYLE_ITEMS = [
     key: "fine",
     title: "FINE LINE",
     line1: "線の精度。",
-    line2: "細さより、崩れにくさ。",
+    line2: "細さより崩れにくさ。",
     word: "PRECISION",
     img: "/style/style-fine.webp",
     alt: "Fine line style reference",
@@ -23,20 +23,20 @@ const STYLE_ITEMS = [
     key: "bg",
     title: "BLACK & GREY",
     line1: "黒の階調。",
-    line2: "汚れず、沈む。",
+    line2: "汚れず沈む濃度。",
     word: "GRADATION",
     img: "/style/style-blackgrey.webp",
     alt: "Black and grey style reference",
   },
-  {
-    key: "cover",
-    title: "COVERUP",
-    line1: "消すのではなく、",
-    line2: "更新する。",
-    word: "UPDATE",
-    img: "/style/style-coverup.webp",
-    alt: "Coverup style reference",
-  },
+{
+  key: "cover",
+  title: "COVERUP",
+  line1: "消すのではなく、",
+  line2: "上書きします。",
+  word: "UPDATE",
+  img: "/style/style-coverup.webp",
+  alt: "Coverup style reference",
+},
 ];
 
 export default function Style() {
@@ -75,12 +75,12 @@ export default function Style() {
             </Reveal>
 
             <Reveal preset="base" y={14} delay={PILLAR_DELAY + 0.10}>
-              <h2 className={styles.title}>相性を確認。</h2>
+              <h2 className={styles.title}>スタイルの確認</h2>
             </Reveal>
 
             <Reveal preset="base" y={14} delay={PILLAR_DELAY + 0.14}>
               <p className={styles.lead}>
-                得意を3つに絞りました。迷わせないために、基準だけ置きます。
+                得意なスタイルを3つに絞りました。迷わず選べるよう、基準だけ示します。
               </p>
             </Reveal>
           </header>
@@ -91,7 +91,12 @@ export default function Style() {
               return (
                 <article key={it.key} className={styles.card} role="listitem">
                   {/* 画像 */}
-                  <Reveal preset="base" y={18} delay={d} className={styles.cardReveal}>
+                  <Reveal
+                    preset="base"
+                    y={18}
+                    delay={d}
+                    className={styles.cardReveal}
+                  >
                     <figure className={styles.frame} aria-label={it.title}>
                       <img
                         className={styles.frameImg}
