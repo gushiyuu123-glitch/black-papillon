@@ -5,7 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Butterfly({
-  dir = "/blackpapillon/type",
+  dir = "/type",
   frames: framesProp,
 
   triggerRef = null,

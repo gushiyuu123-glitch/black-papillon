@@ -1,3 +1,4 @@
+// src/sections/HeroPC.jsx
 import { useEffect, useRef } from "react";
 import styles from "./HeroPC.module.css";
 import gsap from "gsap";
@@ -39,18 +40,25 @@ export default function HeroPC() {
 
       // 初期
       gsap.set(leftItems, { opacity: 0, y: 18, scale: 0.995 });
-gsap.set(img, {
-  scale: 1.035,   // 1.07 → 強すぎ
-  y: 10,          // 18 → 少しだけ
-  clipPath: "inset(5% 5% 8% 5%)",
-});
+
+      gsap.set(img, {
+        scale: 1.035,
+        y: 10,
+        clipPath: "inset(5% 5% 8% 5%)",
+      });
+
       if (veil) gsap.set(veil, { opacity: 0 });
       if (meta) gsap.set(meta, { opacity: 0, y: 10 });
 
       // reduce は即表示
       if (reduce) {
         gsap.set(leftItems, { opacity: 1, y: 0, scale: 1, clearProps: "all" });
-        gsap.set(img, { opacity: 1, y: 0, scale: 1, clipPath: "inset(0 0 0 0)" });
+        gsap.set(img, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          clipPath: "inset(0 0 0 0)",
+        });
         if (veil) gsap.set(veil, { opacity: 1 });
         if (meta) gsap.set(meta, { opacity: 1, y: 0 });
         return () => img.removeEventListener("load", onLoad);
@@ -76,7 +84,9 @@ gsap.set(img, {
         0.1
       );
 
-      if (veil) tl.to(veil, { opacity: 1, duration: 0.9, ease: "power2.out" }, 0.18);
+      if (veil) {
+        tl.to(veil, { opacity: 1, duration: 0.9, ease: "power2.out" }, 0.18);
+      }
       if (meta) tl.to(meta, { opacity: 1, y: 0, duration: 0.6 }, 0.55);
 
       // Parallax
@@ -115,12 +125,19 @@ gsap.set(img, {
   }, []);
 
   return (
-    <section id="hero" ref={heroRef} className={styles.hero} aria-label="BLACK PAPILLON Hero">
+    <section
+      id="hero"
+      ref={heroRef}
+      className={styles.hero}
+      aria-label="BLACK PAPILLON Hero"
+    >
       <div className={styles.stage}>
         <div ref={leftRef} className={styles.left}>
           <div className={styles.kicker} data-hero-item>
             <span className={styles.k1}>TATTOO STUDIO</span>
-            <span className={styles.dot} aria-hidden="true">•</span>
+            <span className={styles.dot} aria-hidden="true">
+              •
+            </span>
             <span className={styles.k2}>NAHA, OKINAWA</span>
           </div>
 
@@ -129,38 +146,46 @@ gsap.set(img, {
 
             <LogoSvgReveal src={LOGO_SRC} className={styles.logoSvgInline} />
 
-  <Butterfly
-  triggerRef={heroRef}
-  className={styles.bflyOnLogo}
-  dir="/blackpapillon/type"
-  scrub={1.1}
-  cycles={0.78}
-  alpha={0.75}
-  drift={{ x: 14, y: 20, rot: 4 }}
-  driftScrub={0.85}
-  introDelay={0.35}
-  introDur={0.35}
-  disabledOnCoarse={true}
-  flapOnHover={true}
-  hoverScopeRef={heroRef}
-  hoverSelector="[data-bfly-flap]"
-  hoverDur={0.62}
-  hoverCooldown={0.42}
-/>
+            <Butterfly
+              triggerRef={heroRef}
+              className={styles.bflyOnLogo}
+              dir="/type"
+              scrub={1.25}
+              cycles={0.62}
+              alpha={0.76}
+              drift={{ x: 10, y: 16, rot: 3 }}
+              driftScrub={0.98}
+              introDelay={0.32}
+              introDur={0.5}
+              disabledOnCoarse={true}
+              flapOnHover={true}
+              hoverScopeRef={heroRef}
+              hoverSelector="[data-bfly-flap]"
+              hoverDur={0.7}
+              hoverCooldown={0.55}
+            />
           </h1>
 
-          <p className={styles.tagline} data-hero-item>Made to Last.</p>
+          <p className={styles.tagline} data-hero-item>
+            Made to Last.
+          </p>
 
           <div className={styles.links} aria-label="Primary links" data-hero-item>
-            <a className={styles.link} href="#works" data-bfly-flap>WORKS</a>
-            <a className={styles.link} href="#healed" data-bfly-flap>HEALED</a>
-            <a className={styles.linkAccent} href="#booking" data-bfly-flap>BOOKING</a>
+            <a className={styles.link} href="#works" data-bfly-flap>
+              WORKS
+            </a>
+            <a className={styles.link} href="#healed" data-bfly-flap>
+              HEALED
+            </a>
+            <a className={styles.linkAccent} href="#booking" data-bfly-flap>
+              BOOKING
+            </a>
           </div>
 
           <p className={styles.note} data-hero-item>
-            Made to Last.
+            Carve Beauty.
             <br />
-            仕上がりで、選ぶ。
+            美を刻む。
           </p>
         </div>
 
@@ -175,9 +200,9 @@ gsap.set(img, {
               fetchPriority="high"
             />
             <div ref={veilRef} className={styles.riverVeil} aria-hidden="true" />
-            <div ref={metaRef} className={styles.riverMeta} aria-hidden="true">
-              WORK / HEALED / CLOSE-UP
-            </div>
+   <div ref={metaRef} className={styles.riverMeta} aria-hidden="true">
+  HEALED PROOF
+</div>
           </div>
 
           <div className={styles.spine} aria-hidden="true" />

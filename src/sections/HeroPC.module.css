@@ -312,3 +312,9 @@
 
   transform: rotate(-6deg);
 }
+/* HeroPC.module.css 追記 */
+.bflyOnLogo{
+  will-change: transform, opacity;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+}

@@ -2,7 +2,7 @@
 import styles from "./Style.module.css";
 import Reveal from "../components/Reveal";
 
-const PILLAR_IMG = "/blackpapillon/style/style-left-pillar-inner.webp";
+const PILLAR_IMG = "/style/style-left-pillar-inner.webp";
 
 // 左 → 右の順に入れる（柱 → 3枚）
 const STAGGER = 0.08;     // 0.06〜0.10 好み
@@ -16,7 +16,7 @@ const STYLE_ITEMS = [
     line1: "線の精度。",
     line2: "細さより、崩れにくさ。",
     word: "PRECISION",
-    img: "/blackpapillon/style/style-fine.webp",
+    img: "/style/style-fine.webp",
     alt: "Fine line style reference",
   },
   {
@@ -25,7 +25,7 @@ const STYLE_ITEMS = [
     line1: "黒の階調。",
     line2: "汚れず、沈む。",
     word: "GRADATION",
-    img: "/blackpapillon/style/style-blackgrey.webp",
+    img: "/style/style-blackgrey.webp",
     alt: "Black and grey style reference",
   },
   {
@@ -34,7 +34,7 @@ const STYLE_ITEMS = [
     line1: "消すのではなく、",
     line2: "更新する。",
     word: "UPDATE",
-    img: "/blackpapillon/style/style-coverup.webp",
+    img: "/style/style-coverup.webp",
     alt: "Coverup style reference",
   },
 ];

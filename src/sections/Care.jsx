@@ -3,7 +3,7 @@ import styles from "./Care.module.css";
 import Reveal from "../components/Reveal";
 
 // ✅ フルワイド背景に使う（完成タトゥーじゃない“準備/現場”の証拠写真）
-const PROOF_IMG = "/blackpapillon/care/care-proof.png"; // publicに置いて差し替え
+const PROOF_IMG = "/care/care-proof.png"; // publicに置いて差し替え
 
 const PROCESS = [
   ["予約", "部位 / サイズ / イメージを送る（短くでOK）"],

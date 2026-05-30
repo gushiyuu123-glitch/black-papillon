@@ -2,8 +2,8 @@
 import styles from "./Footer.module.css";
 import Reveal from "../components/Reveal";
 
-const LOGO_SRC = "/blackpapillon/type/BLACKPAPILLON.svg";
-const BFLY_STATIC = "/blackpapillon/type/b1.png";
+const LOGO_SRC = "/type/BLACKPAPILLON.svg";
+const BFLY_STATIC = "/type/b1.png";
 
 const INSTAGRAM_URL = "#"; // TODO: 実URL
 const EMAIL = "hello@blackpapillon.tattoo"; // 仮

@@ -5,11 +5,11 @@ import styles from "./Header.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LOGO_SRC = "/blackpapillon/type/BLACKPAPILLONheader1.svg";
-const BFLY_STATIC = "/blackpapillon/type/b1.png";
+const LOGO_SRC = "/type/BLACKPAPILLONheader1.svg";
+const BFLY_STATIC = "/type/b1.png";
 
-const WORKS_SVG = "/blackpapillon/type/WORKS.svg";
-const PRICE_SVG = "/blackpapillon/type/PRICEGUIDE.svg"; // これを使う
+const WORKS_SVG = "/type/WORKS.svg";
+const PRICE_SVG = "/type/PRICEGUIDE.svg"; // これを使う
 
 export default function Header({ heroId = "hero", logoLeft = 25 }) {
   const headerRef = useRef(null);

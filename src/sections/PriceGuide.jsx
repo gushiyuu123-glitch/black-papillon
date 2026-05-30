@@ -4,8 +4,8 @@ import Reveal from "../components/Reveal";
 import Butterfly from "../components/Butterfly";
 import LogoSvgReveal from "../components/SvgStaggerReveal.jsx";
 
-const TITLE_SVG = "/blackpapillon/type/PRICEGUIDE.svg";
-const BF_DIR = "/blackpapillon/type";
+const TITLE_SVG = "/type/PRICEGUIDE.svg";
+const BF_DIR = "/type";
 
 // 数字は仮。あとで差し替え
 const TIERS = [
@@ -48,23 +48,38 @@ export default function PriceGuide() {
                   ariaLabel="PRICE GUIDE"
                 />
 
-           <Butterfly
+      <Butterfly
   triggerRef={sectionRef}
   className={styles.bflyOnTitle}
   dir={BF_DIR}
-  scrub={1.05}
-  cycles={0.72}
-  alpha={0.82}
-  drift={{ x: 10, y: 16, rot: 3 }}
-  driftScrub={0.85}
-  introDelay={0.22}
-  introDur={0.34}
+
+  // ✅ スクロール連動は“重く”して滑らかに
+  scrub={1.35}
+
+  // ✅ 羽ばたき周期を落として“生き物”に
+  cycles={0.56}
+
+  // ✅ 透明度は少し落として気配に
+  alpha={0.74}
+
+  // ✅ 揺れ幅を減らす（大きいと玩具っぽい）
+  drift={{ x: 7, y: 11, rot: 2 }}
+
+  // ✅ 慣性を少し増やす（ヌルっと遅れて追従）
+  driftScrub={1.05}
+
+  // ✅ 入りは気配→像が整う
+  introDelay={0.28}
+  introDur={0.48}
+
   disabledOnCoarse={true}
+
+  // ✅ hoverは“短くパタパタ”じゃなく“ふわっ”
   flapOnHover={true}
   hoverScopeRef={sectionRef}
   hoverSelector="[data-bfly-flap]"
-  hoverDur={0.62}
-  hoverCooldown={0.42}
+  hoverDur={0.74}
+  hoverCooldown={0.55}
 />
               </div>
             </Reveal>

@@ -7,7 +7,7 @@ import Reveal from "../components/Reveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const BOOKING_BG = "/blackpapillon/booking/booking-bg.png";
+const BOOKING_BG = "/booking/booking-bg.png";
 
 const INSTAGRAM_URL = "#"; // 例: https://instagram.com/blackpapillon_tattoo
 const EMAIL = "hello@blackpapillon.tattoo"; // 仮

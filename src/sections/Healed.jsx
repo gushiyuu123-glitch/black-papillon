@@ -2,7 +2,7 @@
 import styles from "./Healed.module.css";
 import Reveal from "../components/Reveal";
 
-const HEALED_IMG = "/blackpapillon/healed/healed-04.png"; // publicに置いて差し替え
+const HEALED_IMG = "/healed/healed-04.png"; // publicに置いて差し替え
 
 export default function Healed() {
   return (

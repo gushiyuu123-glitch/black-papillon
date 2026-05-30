@@ -2,9 +2,32 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google翻訳を無効化 -->
+    <meta name="google" content="notranslate" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- =========================================================
+      FAVICON / APP ICONS  (public直下に配置)
+    ========================================================== -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Windows tile -->
+    <meta name="msapplication-TileColor" content="#07080A" />
+    <meta name="msapplication-TileImage" content="/mstile-150x150.png" />
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#07080A" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- =========================================================
+      FONTS
+    ========================================================== -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,63 +35,66 @@
       rel="stylesheet"
     />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- Google翻訳を完全無効化 -->
-    <meta name="google" content="notranslate" />
-
-    <!-- ===== SEO Core ===== -->
-    <title>BLACK PAPILLON — Tattoo Studio Concept / 治癒後の仕上がりで選ぶ</title>
+    <!-- =========================================================
+      SEO CORE
+    ========================================================== -->
+    <title>BLACK PAPILLON — Tattoo Studio Concept | Carve Beauty. 美を刻む。</title>
     <meta
       name="description"
-      content="BLACK PAPILLON（架空ブランド）— 治癒後の仕上がりを基準に、FINE LINE / BLACK & GREY / COVERUP を提示するタトゥースタジオのコンセプトサイト。予約導線はDM・メール・電話に対応。"
+      content="BLACK PAPILLON（架空ブランド）— 治癒後の仕上がりを基準に、FINE LINE / BLACK & GREY / COVERUP の相性が分かるタトゥースタジオ・コンセプトサイト。Carve Beauty. 美を刻む。"
     />
-    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
 
-    <!-- Canonical（検索の主役URLを固定） -->
-    <link rel="canonical" href="https://blackpapillon.example/" />
+    <!-- Canonical / URL固定（※カスタムドメインを取ったらここだけ差し替え） -->
+    <link rel="canonical" href="https://black-papillon.vercel.app/" />
 
-    <!-- Author / Creator（本拠地へプラス） -->
+    <!-- Author / 本拠地へ接続（弱く、でも確実に） -->
     <meta name="author" content="Yuto Gushiken" />
     <link rel="author" href="https://gushikendesign.com/" />
 
-    <!-- ===== Open Graph ===== -->
+    <!-- =========================================================
+      OPEN GRAPH
+    ========================================================== -->
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="BLACK PAPILLON" />
     <meta property="og:title" content="BLACK PAPILLON — Tattoo Studio Concept" />
     <meta
       property="og:description"
-      content="治癒後の仕上がりを基準に、相性が分かる。FINE LINE / BLACK & GREY / COVERUP。"
+      content="治癒後の仕上がりを基準に、相性が分かる。FINE LINE / BLACK & GREY / COVERUP。Carve Beauty. 美を刻む。"
     />
-    <meta property="og:url" content="https://blackpapillon.example/" />
-    <meta property="og:image" content="https://blackpapillon.example/ogp.jpg" />
+    <meta property="og:url" content="https://black-papillon.vercel.app/" />
+    <meta property="og:image" content="https://black-papillon.vercel.app/ogp.png" />
+    <meta property="og:image:secure_url" content="https://black-papillon.vercel.app/ogp.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="BLACK PAPILLON — Carve Beauty. 美を刻む。" />
 
-    <!-- ===== Twitter Card ===== -->
+    <!-- =========================================================
+      TWITTER
+    ========================================================== -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="BLACK PAPILLON — Tattoo Studio Concept" />
     <meta
       name="twitter:description"
-      content="治癒後の仕上がりを基準に、相性が分かる。FINE LINE / BLACK & GREY / COVERUP。"
+      content="治癒後の仕上がりを基準に、相性が分かる。FINE LINE / BLACK & GREY / COVERUP。Carve Beauty. 美を刻む。"
     />
-    <meta name="twitter:image" content="https://blackpapillon.example/ogp.jpg" />
+    <meta name="twitter:image" content="https://black-papillon.vercel.app/ogp.png" />
 
-    <!-- Theme -->
-    <meta name="theme-color" content="#07080A" />
-    <meta name="color-scheme" content="dark" />
-
-    <!-- ===== Structured Data (嘘にならない型) ===== -->
+    <!-- =========================================================
+      STRUCTURED DATA（嘘にならない“作品”としての型）
+    ========================================================== -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@graph": [
           {
             "@type": "WebSite",
-            "@id": "https://blackpapillon.example/#website",
-            "url": "https://blackpapillon.example/",
+            "@id": "https://black-papillon.vercel.app/#website",
+            "url": "https://black-papillon.vercel.app/",
             "name": "BLACK PAPILLON",
             "description": "Tattoo Studio Concept site (fictional brand) focusing on healed quality.",
             "inLanguage": "ja-JP",
@@ -80,18 +106,18 @@
           },
           {
             "@type": "WebPage",
-            "@id": "https://blackpapillon.example/#webpage",
-            "url": "https://blackpapillon.example/",
+            "@id": "https://black-papillon.vercel.app/#webpage",
+            "url": "https://black-papillon.vercel.app/",
             "name": "BLACK PAPILLON — Tattoo Studio Concept",
-            "isPartOf": { "@id": "https://blackpapillon.example/#website" },
+            "isPartOf": { "@id": "https://black-papillon.vercel.app/#website" },
             "inLanguage": "ja-JP"
           },
           {
             "@type": "CreativeWork",
             "name": "BLACK PAPILLON — Tattoo Studio Concept Site",
-            "url": "https://blackpapillon.example/",
+            "url": "https://black-papillon.vercel.app/",
             "genre": ["Web Design", "Brand Concept", "UI/UX"],
-            "keywords": ["tattoo", "fine line", "black and grey", "coverup", "healed"],
+            "keywords": ["tattoo", "fine line", "black and grey", "coverup", "healed", "concept"],
             "creator": {
               "@type": "Person",
               "name": "Yuto Gushiken",

@@ -13,44 +13,44 @@ const WORKS_ITEMS = [
     no: "01",
     tag: "FOREARM",
     sub: "FINE LINE",
-    src: "/blackpapillon/works/forearm.png",
+    src: "/works/forearm.png",
     alt: "Forearm tattoo close-up",
   },
   {
     no: "02",
     tag: "SHOULDER",
     sub: "BLACK & GREY",
-    src: "/blackpapillon/works/shoulder.jpeg",
+    src: "/works/shoulder.jpeg",
     alt: "Shoulder tattoo close-up",
   },
   {
     no: "03",
     tag: "ANKLE",
     sub: "DETAIL",
-    src: "/blackpapillon/works/ankle.png",
+    src: "/works/ankle.png",
     alt: "Ankle tattoo close-up",
   },
   {
     no: "04",
     tag: "CLOSE-UP",
     sub: "TEXTURE",
-    src: "/blackpapillon/works/closeup-01.jpeg",
+    src: "/works/closeup-01.jpeg",
     alt: "Tattoo texture close-up",
   },
   {
     no: "05",
     tag: "CLOSE-UP",
     sub: "SILENCE",
-    src: "/blackpapillon/works/closeup-02.jpeg",
+    src: "/works/closeup-02.jpeg",
     alt: "Tattoo detail close-up",
   },
 ];
 
 // 右：世界観背景（1枚）
-const RIGHT_BG = "/blackpapillon/works-bg1.jpeg";
+const RIGHT_BG = "/works-bg1.jpeg";
 
 // WORKS SVG（Figma export → public）
-const WORKS_SVG = "/blackpapillon/type/WORKS.svg";
+const WORKS_SVG = "/type/WORKS.svg";
 
 function Ticket({ no, tag, sub }) {
   return (
@@ -164,7 +164,7 @@ export default function Works() {
                     follow="page"
                     triggerRef={sectionRef}
                     className={styles.worksBfly}
-                    dir="/blackpapillon/type"
+                    dir="/type"
                     cycles={1.15}
                     alpha={0.82}
                     drift={{ x: 14, y: 18, rot: 4 }}
