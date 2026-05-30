@@ -7,8 +7,8 @@ import Butterfly from "../components/Butterfly";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const HERO_IMG = "/blackpapillon/hero1.jpeg";
-const LOGO_SRC = "/blackpapillon/type/BLACKPAPILLON.svg";
+const HERO_IMG = "/hero1.jpeg";
+const LOGO_SRC = "/type/BLACKPAPILLON.svg";
 
 export default function HeroPC() {
   const heroRef = useRef(null);
