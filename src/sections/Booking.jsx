@@ -9,9 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const BOOKING_BG = "/booking/booking-bg.png";
 
-const INSTAGRAM_URL = "#"; // 例: https://instagram.com/blackpapillon_tattoo
-const EMAIL = "hello@blackpapillon.tattoo"; // 仮
-const TEL = "090-0000-0000"; // 仮
+// 例: https://instagram.com/blackpapillon_tattoo
+const INSTAGRAM_URL = "#";
 
 const SEND = [
   { no: "01", text: "部位 / だいたいのサイズ" },
@@ -20,7 +19,6 @@ const SEND = [
 ];
 
 export default function Booking() {
-  const telHref = `tel:${TEL.replace(/[^0-9+]/g, "")}`;
   const sectionRef = useRef(null);
   const bgRef = useRef(null);
 
@@ -31,8 +29,7 @@ export default function Booking() {
 
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    const coarse =
-      window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
+    const coarse = window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
 
     // PCだけ（SPは最後に作る方針）
     if (reduce || coarse) {
@@ -71,7 +68,7 @@ export default function Booking() {
       ref={sectionRef}
       id="booking"
       className={styles.section}
-      aria-labelledby="booking-label"
+      aria-labelledby="booking-title"
     >
       {/* 背景（薄いパララックス） */}
       <img
@@ -94,9 +91,9 @@ export default function Booking() {
           </div>
 
           <Reveal preset="base" y={12}>
-            <p id="booking-label" className={styles.kicker}>
+            <h2 id="booking-title" className={styles.kicker}>
               BOOKING
-            </p>
+            </h2>
           </Reveal>
 
           <Reveal preset="base" y={14} delay={0.05}>
@@ -104,9 +101,9 @@ export default function Booking() {
           </Reveal>
 
           <Reveal preset="base" y={12} delay={0.09}>
-     <p className={styles.leftNote}>
-  下絵が決まってから、金額と日程を確定します。
-</p>
+            <p className={styles.leftNote}>
+              下絵が決まってから、金額と日程を確定します。
+            </p>
           </Reveal>
 
           <div className={styles.leftFade} aria-hidden="true" />
@@ -126,12 +123,7 @@ export default function Booking() {
 
               <div className={styles.list} role="list" aria-label="送る内容">
                 {SEND.map((it, i) => (
-                  <Reveal
-                    key={it.no}
-                    preset="base"
-                    y={10}
-                    delay={0.10 + i * 0.04}
-                  >
+                  <Reveal key={it.no} preset="base" y={10} delay={0.1 + i * 0.04}>
                     <div className={styles.row} role="listitem">
                       <span className={styles.no}>{it.no}</span>
                       <span className={styles.txt}>{it.text}</span>
@@ -150,44 +142,20 @@ export default function Booking() {
                   href={INSTAGRAM_URL}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="Instagramで相談する"
+                  aria-label="InstagramでDMを送る"
                 >
-                  相談する{" "}
+                  DMを送る
                   <span className={styles.arrow} aria-hidden="true">
                     →
                   </span>
                 </a>
               </Reveal>
 
+              {/* ✅ 連絡手段の羅列はCONTACTに寄せる（重複回避） */}
               <Reveal preset="base" y={8} delay={0.30}>
                 <p className={styles.channelsCap}>
-                  InstagramのDMが一番早いです。メール・電話でも受け付けています。
+                  連絡先の詳細は下のCONTACTにまとめています。
                 </p>
-              </Reveal>
-
-              <Reveal preset="base" y={8} delay={0.33}>
-                <div className={styles.channelsRow} aria-label="連絡手段">
-                  <a
-                    className={styles.chLink}
-                    href={INSTAGRAM_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Instagram
-                  </a>
-                  <span className={styles.dot} aria-hidden="true">
-                    /
-                  </span>
-                  <a className={styles.chLink} href={`mailto:${EMAIL}`}>
-                    {EMAIL}
-                  </a>
-                  <span className={styles.dot} aria-hidden="true">
-                    /
-                  </span>
-                  <a className={styles.chLink} href={telHref}>
-                    {TEL}
-                  </a>
-                </div>
               </Reveal>
             </div>
           </Reveal>

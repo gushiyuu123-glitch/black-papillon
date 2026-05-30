@@ -1,5 +1,6 @@
 /* src/sections/Healed.module.css */
-.section {
+
+.section{
   position: relative;
   background: var(--bg);
   color: var(--text);
@@ -8,7 +9,7 @@
   isolation: isolate;
 }
 
-.section::before {
+.section::before{
   content: "";
   position: absolute;
   inset: -26%;
@@ -19,18 +20,18 @@
   z-index: 0;
 }
 
-.inner {
+.inner{
   width: min(1180px, 92vw);
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
 
-.head {
+.head{
   margin: 0 0 clamp(26px, 3.8vw, 44px);
 }
 
-.kicker {
+.kicker{
   font-family: var(--h2-font);
   letter-spacing: .28em;
   font-size: 12px;
@@ -39,7 +40,8 @@
   margin: 0 0 10px;
 }
 
-.sub {
+/* ✅ STYLEと揃えて、セクション見出しはh2側に */
+.title{
   margin: 0;
   font-family: var(--p-font);
   font-size: 12px;
@@ -48,13 +50,13 @@
 }
 
 /* center stage */
-.center {
+.center{
   width: min(980px, 100%);
   margin: 0 auto;
 }
 
 /* 判決テキスト */
-.statement {
+.statement{
   margin: 0;
   text-align: center;
   text-wrap: balance;
@@ -69,17 +71,15 @@
   color: rgba(242,240,234,.86);
 }
 
-.statement > span {
-  display: block;
-}
+.statement > span{ display: block; }
 
-.l1 {
+.l1{
   font-weight: 500;
   color: rgba(242,240,234,.92);
 }
 
 .l2,
-.l3 {
+.l3{
   font-weight: 400;
   color: rgba(242,240,234,.74);
 }
@@ -105,29 +105,6 @@
   position: relative;
 }
 
-/* 画像：少し大きく + ほんの薄い膜（ボヤケ） */
-.sampleImg{
-  width: min(680px, 94%);
-  height: auto;
-  max-width: 100%;
-  display: block;
-
-  /* ここが世界観回収ポイント */
-  opacity: .92;
-  filter:
-    saturate(.90)
-    contrast(1.02)
-    brightness(.98)
-    blur(.28px);
-
-  /* “写真が浮く”のを抑える */
-  transform: translateZ(0) scale(1.005);
-  backface-visibility: hidden;
-
-  /* 端が硬い時の保険（環境により効く） */
-  box-shadow: 0 34px 120px rgba(0,0,0,.34);
-}
-
 /* 追加の“気配の膜”（箱じゃなく空気） */
 .sample::after{
   content:"";
@@ -141,9 +118,30 @@
   z-index: 0;
 }
 
-/* 画像を膜より上に */
-.sampleImg{ position: relative; z-index: 1; }
+/* 画像：少し大きく + ほんの薄い膜（ボヤケ） */
+.sampleImg{
+  width: min(680px, 94%);
+  height: auto;
+  max-width: 100%;
+  display: block;
 
+  opacity: .92;
+  filter:
+    saturate(.90)
+    contrast(1.02)
+    brightness(.98)
+    blur(.28px);
+
+  transform: translateZ(0) scale(1.005);
+  backface-visibility: hidden;
+
+  box-shadow: 0 34px 120px rgba(0,0,0,.34);
+
+  position: relative;
+  z-index: 1;
+}
+
+/* ✅ captionが膜の下に沈む事故を潰す */
 .sampleCap{
   font-family: var(--h2-font);
   letter-spacing: .22em;
@@ -151,10 +149,13 @@
   font-weight: 800;
   color: rgba(242,240,234,.52);
   text-shadow: 0 10px 30px rgba(0,0,0,.55);
+
+  position: relative;
+  z-index: 1;
 }
 
 /* 下の線（区切り） */
-.footerLine {
+.footerLine{
   margin: clamp(38px, 5vw, 74px) auto 0;
   width: min(1180px, 92vw);
   height: 1px;

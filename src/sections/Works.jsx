@@ -9,11 +9,11 @@ import SvgStaggerReveal from "../components/SvgStaggerReveal";
 
 // 左：局所作品
 const WORKS_ITEMS = [
-  { no: "01", tag: "FOREARM",   sub: "FINE LINE",     src: "/works/forearm.png",      alt: "Forearm tattoo close-up" },
-  { no: "02", tag: "SHOULDER",  sub: "BLACK & GREY",  src: "/works/shoulder.jpeg",    alt: "Shoulder tattoo close-up" },
-  { no: "03", tag: "ANKLE",     sub: "DETAIL",        src: "/works/ankle.png",        alt: "Ankle tattoo close-up" },
-  { no: "04", tag: "CLOSE-UP",  sub: "TEXTURE",       src: "/works/closeup-01.jpeg",  alt: "Tattoo texture close-up" },
-  { no: "05", tag: "CLOSE-UP",  sub: "SILENCE",       src: "/works/closeup-02.jpeg",  alt: "Tattoo detail close-up" },
+  { no: "01", tag: "FOREARM",  sub: "FINE LINE",    src: "/works/forearm.png",     alt: "Forearm tattoo close-up" },
+  { no: "02", tag: "SHOULDER", sub: "BLACK & GREY", src: "/works/shoulder.jpeg",   alt: "Shoulder tattoo close-up" },
+  { no: "03", tag: "ANKLE",    sub: "DETAIL",       src: "/works/ankle.png",       alt: "Ankle tattoo close-up" },
+  { no: "04", tag: "CLOSE-UP", sub: "TEXTURE",      src: "/works/closeup-01.jpeg", alt: "Tattoo texture close-up" },
+  { no: "05", tag: "CLOSE-UP", sub: "SILENCE",      src: "/works/closeup-02.jpeg", alt: "Tattoo detail close-up" },
 ];
 
 // 右：世界観背景
@@ -36,7 +36,7 @@ function Frame({ item, className = "", pmKind = "tail" }) {
   const pmClass =
     pmKind === "hit" ? styles.pmHit : pmKind === "soft" ? styles.pmHitSoft : styles.pmTail;
 
-  // ✅ containの“背景だけ動く”を見えるようにする（やりすぎない）
+  // containの“背景だけ動く”を見えるようにする（やりすぎない）
   const pmTune =
     pmKind === "tail"
       ? { yPercent: 6, scale: 1.04, bgBlur: 12, bgOpacity: 0.62 }
@@ -70,13 +70,25 @@ export default function Works() {
   const tail = WORKS_ITEMS.slice(2);
 
   return (
-    <section id="works" ref={sectionRef} className={styles.section} aria-labelledby="works-label">
+    <section
+      id="works"
+      ref={sectionRef}
+      className={styles.section}
+      aria-labelledby="works-title"
+    >
       <div className={styles.inner}>
         {/* LEFT */}
         <div className={styles.left}>
           <header className={styles.head}>
-            <p id="works-label" className={styles.kicker}>WORKS</p>
-            <p className={styles.note}>Proof before words.</p>
+            <Reveal preset="base" y={12}>
+              <h2 id="works-title" className={styles.kicker}>
+                WORKS
+              </h2>
+            </Reveal>
+
+            <Reveal preset="base" y={12} delay={0.04}>
+              <p className={styles.note}>Proof before words.</p>
+            </Reveal>
           </header>
 
           <div className={styles.stage} aria-label="Works featured">
@@ -123,7 +135,8 @@ export default function Works() {
                 </Reveal>
 
                 <div className={styles.bflyGroup} aria-hidden="true">
-                  <Butterfly
+                  {/* ✅ 蝶：遅く自然（激しさを殺す） */}
+                   <Butterfly
                     follow="page"
                     triggerRef={sectionRef}
                     className={styles.worksBfly}

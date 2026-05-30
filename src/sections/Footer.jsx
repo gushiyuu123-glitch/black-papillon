@@ -70,7 +70,6 @@ export default function Footer() {
       id="footer"
       className={styles.footer}
       aria-label="Site footer"
-      style={{ ["--ft-bg-url"]: `url('${FOOTER_BG}')` }}
     >
       {/* 背景（枠なし・滲み・浮遊） */}
       <div className={styles.bgWrap} aria-hidden="true">
@@ -79,7 +78,6 @@ export default function Footer() {
           className={styles.bgImg}
           src={FOOTER_BG}
           alt=""
-          aria-hidden="true"
           loading="lazy"
           decoding="async"
           draggable="false"
@@ -129,14 +127,12 @@ export default function Footer() {
             </section>
           </Reveal>
 
-          {/* CONTACT */}
+          {/* CONTACT（唯一の連絡先表示） */}
           <Reveal preset="base" y={12} delay={0.08}>
             <section className={styles.block} aria-label="Contact">
               <p className={styles.h}>CONTACT</p>
 
-              <p className={styles.muted}>
-                InstagramのDMが一番早いです。メール・電話でも受け付けています。
-              </p>
+              <p className={styles.muted}>DMが最短。メール・電話も可。</p>
 
               <div className={styles.row} aria-label="Contact links">
                 <a

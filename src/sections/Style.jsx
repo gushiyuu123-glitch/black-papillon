@@ -5,9 +5,9 @@ import Reveal from "../components/Reveal";
 const PILLAR_IMG = "/style/style-left-pillar-inner.webp";
 
 // 左 → 右の順に入れる（柱 → 3枚）
-const STAGGER = 0.08;     // 0.06〜0.10 好み
-const PILLAR_DELAY = 0.0;
-const CARDS_START = 0.14; // 柱のあとに右が動き出す
+const STAGGER = 0.08;
+const PILLAR_DELAY = 0;
+const CARDS_START = 0.14;
 
 const STYLE_ITEMS = [
   {
@@ -28,20 +28,20 @@ const STYLE_ITEMS = [
     img: "/style/style-blackgrey.webp",
     alt: "Black and grey style reference",
   },
-{
-  key: "cover",
-  title: "COVERUP",
-  line1: "消すのではなく、",
-  line2: "上書きします。",
-  word: "UPDATE",
-  img: "/style/style-coverup.webp",
-  alt: "Coverup style reference",
-},
+  {
+    key: "cover",
+    title: "COVERUP",
+    line1: "消すのではなく、",
+    line2: "上書きします。",
+    word: "UPDATE",
+    img: "/style/style-coverup.webp",
+    alt: "Coverup style reference",
+  },
 ];
 
 export default function Style() {
   return (
-    <section id="style" className={styles.section} aria-labelledby="style-label">
+    <section id="style" className={styles.section} aria-labelledby="style-title">
       <div className={styles.inner}>
         {/* LEFT : pillar */}
         <aside className={styles.left} aria-label="Style pillar visual">
@@ -55,8 +55,7 @@ export default function Style() {
               <img
                 className={styles.pillarImg}
                 src={PILLAR_IMG}
-                alt=""
-                aria-hidden="true"
+                alt=""                 // 装飾なので空altで十分
                 loading="lazy"
                 decoding="async"
               />
@@ -69,28 +68,26 @@ export default function Style() {
         <div className={styles.right}>
           <header className={styles.head}>
             <Reveal preset="base" y={14} delay={PILLAR_DELAY + 0.06}>
-              <p id="style-label" className={styles.kicker}>
-                STYLE
-              </p>
+              <p className={styles.kicker}>STYLE</p>
             </Reveal>
 
-            <Reveal preset="base" y={14} delay={PILLAR_DELAY + 0.10}>
-              <h2 className={styles.title}>スタイルの確認</h2>
+            <Reveal preset="base" y={14} delay={PILLAR_DELAY + 0.1}>
+              <h2 id="style-title" className={styles.title}>
+                得意スタイル
+              </h2>
             </Reveal>
 
             <Reveal preset="base" y={14} delay={PILLAR_DELAY + 0.14}>
-              <p className={styles.lead}>
-                得意なスタイルを3つに絞りました。迷わず選べるよう、基準だけ示します。
-              </p>
+              <p className={styles.lead}>3つだけ。迷わないための基準だけ。</p>
             </Reveal>
           </header>
 
           <div className={styles.grid} role="list" aria-label="Style list">
             {STYLE_ITEMS.map((it, i) => {
-              const d = CARDS_START + i * STAGGER; // 左→右
+              const d = CARDS_START + i * STAGGER;
+
               return (
                 <article key={it.key} className={styles.card} role="listitem">
-                  {/* 画像 */}
                   <Reveal
                     preset="base"
                     y={18}
@@ -109,7 +106,6 @@ export default function Style() {
                     </figure>
                   </Reveal>
 
-                  {/* テキスト（画像のあとに追従） */}
                   <div className={styles.meta}>
                     <Reveal preset="base" y={12} delay={d + 0.03}>
                       <p className={styles.cardTitle}>{it.title}</p>
@@ -124,7 +120,7 @@ export default function Style() {
                       </p>
                     </Reveal>
 
-                    {!!it.word && (
+                    {it.word && (
                       <Reveal preset="base" y={10} delay={d + 0.07}>
                         <p className={styles.word} aria-hidden="true">
                           {it.word}

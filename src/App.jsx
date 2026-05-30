@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -15,47 +15,54 @@ import Footer from "./sections/Footer";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
+  const lenisRef = useRef(null);
+  const tickRef = useRef(null);
+
   useEffect(() => {
+    // StrictMode二重起動ガード
+    if (lenisRef.current) return;
+
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
     const coarse =
       window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
 
-    // ✅ PCのみ（SPは最後、の方針とも合う）
     if (reduce || coarse) return;
 
     const lenis = new Lenis({
-      // “質量”寄り（BLACK PAPILLON向け）
       lerp: 0.085,
       smoothWheel: true,
-
-      // ✅ アンカー(#works等)有効化
       anchors: true,
       stopInertiaOnNavigate: true,
-
-      // touchはSPで設計してから（今は触らない）
       syncTouch: false,
     });
 
-    // ✅ ScrollTrigger同期（公式推奨）
+    lenisRef.current = lenis;
+
     lenis.on("scroll", ScrollTrigger.update);
+
     const onTick = (time) => lenis.raf(time * 1000);
+    tickRef.current = onTick;
+
     gsap.ticker.add(onTick);
     gsap.ticker.lagSmoothing(0);
 
-    // 初回だけ整合
     requestAnimationFrame(() => ScrollTrigger.refresh());
 
     return () => {
-      gsap.ticker.remove(onTick);
+      if (tickRef.current) gsap.ticker.remove(tickRef.current);
+      tickRef.current = null;
+
       lenis.destroy();
+      lenisRef.current = null;
+
       ScrollTrigger.refresh();
     };
   }, []);
 
   return (
     <div>
-         <Header heroId="hero" />
+      <Header heroId="hero" />
       <HeroPC />
       <Works />
       <Healed />

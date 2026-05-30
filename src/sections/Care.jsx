@@ -2,14 +2,13 @@
 import styles from "./Care.module.css";
 import Reveal from "../components/Reveal";
 
-// ✅ フルワイド背景に使う（完成タトゥーじゃない“準備/現場”の証拠写真）
-const PROOF_IMG = "/care/care-proof.png"; // publicに置いて差し替え
+const PROOF_IMG = "/care/care-proof.png";
 
 const PROCESS = [
-  ["予約", "部位 / サイズ / イメージを送る（短くてOK）"],
-  ["下絵確認", "当日、線と配置を決める（ここで止められます）"],
+  ["予約", "部位・サイズ・イメージを送る（短くてOK）"],
+  ["下絵確認", "当日、線と配置を決める。ここで止められます。"],
   ["施術", "休憩を挟みながら進めます"],
-  ["ケア", "当日から数日分の手順をお渡しします"],
+  ["ケア", "当日から数日分の手順を渡します"],
 ];
 
 const SAFETY = [
@@ -24,40 +23,36 @@ export default function Care() {
     <section
       id="care"
       className={styles.section}
-      aria-labelledby="care-label"
+      aria-labelledby="care-title"
       style={{ "--care-bg": `url(${PROOF_IMG})` }}
     >
       <div className={styles.inner}>
-        {/* LEFT : header */}
         <div className={styles.left}>
           <header className={styles.head}>
             <Reveal preset="base" y={14}>
-              <p id="care-label" className={styles.kicker}>
-                CARE
-              </p>
+              <p className={styles.kicker}>CARE</p>
             </Reveal>
 
-            <Reveal preset="base" y={14}>
-              <h2 className={styles.title}>当日の流れと清潔基準</h2>
+            <Reveal preset="base" y={14} delay={0.04}>
+              <h2 id="care-title" className={styles.title}>
+                当日の流れ / 清潔基準
+              </h2>
             </Reveal>
 
-            <Reveal preset="base" y={14}>
-     <p className={styles.lead}>
-  当日の流れと、清潔の基準をまとめました。
-</p>
+            <Reveal preset="base" y={14} delay={0.08}>
+              <p className={styles.lead}>迷わないための順番とNGだけ。</p>
             </Reveal>
           </header>
         </div>
 
-        {/* RIGHT : ledgers */}
-        <div className={styles.right} aria-label="Process and safety ledgers">
-          <div className={styles.ledgers}>
+        <div className={styles.right}>
+          <div className={styles.ledgers} role="list" aria-label="Care ledgers">
             <Reveal preset="base" y={14} className={styles.ledgerReveal}>
-              <section className={styles.ledger} aria-labelledby="process-label">
+              <section className={styles.ledger} aria-labelledby="process-label" role="listitem">
                 <div className={styles.ledgerHead}>
-                  <p id="process-label" className={styles.ledgerTitle}>
+                  <h3 id="process-label" className={styles.ledgerTitle}>
                     PROCESS
-                  </p>
+                  </h3>
                   <p className={styles.ledgerNote}>当日の流れ</p>
                 </div>
 
@@ -72,17 +67,12 @@ export default function Care() {
               </section>
             </Reveal>
 
-            <Reveal
-              preset="base"
-              y={14}
-              delay={0.06}
-              className={styles.ledgerReveal}
-            >
-              <section className={styles.ledger} aria-labelledby="safety-label">
+            <Reveal preset="base" y={14} delay={0.06} className={styles.ledgerReveal}>
+              <section className={styles.ledger} aria-labelledby="safety-label" role="listitem">
                 <div className={styles.ledgerHead}>
-                  <p id="safety-label" className={styles.ledgerTitle}>
+                  <h3 id="safety-label" className={styles.ledgerTitle}>
                     SAFETY
-                  </p>
+                  </h3>
                   <p className={styles.ledgerNote}>清潔と判断</p>
                 </div>
 

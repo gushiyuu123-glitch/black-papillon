@@ -1,6 +1,6 @@
 /* src/sections/Booking.module.css */
 
-.section {
+.section{
   position: relative;
   background: var(--bg);
   color: var(--text);
@@ -11,7 +11,7 @@
 }
 
 /* 背景（画像） */
-.bgImg {
+.bgImg{
   position: absolute;
   inset: -2%;
   width: 104%;
@@ -19,13 +19,13 @@
   object-fit: cover;
   opacity: 0.4;
   filter: saturate(.90) contrast(1.08) brightness(.72);
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0,0,0);
   backface-visibility: hidden;
   z-index: 0;
 }
 
 /* 画像の上に膜（世界観固定） */
-.bgVeil {
+.bgVeil{
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -37,7 +37,7 @@
 }
 
 /* 微細な"織り"の気配（品） */
-.section::after {
+.section::after{
   content: "";
   position: absolute;
   inset: 0;
@@ -55,7 +55,7 @@
   z-index: 1;
 }
 
-.inner {
+.inner{
   position: relative;
   z-index: 2;
   max-width: min(var(--bk-max), 94vw);
@@ -69,12 +69,12 @@
 }
 
 /* LEFT */
-.left {
+.left{
   position: relative;
   padding: clamp(18px, 2.2vw, 34px) 0;
 }
 
-.watermark {
+.watermark{
   position: absolute;
   left: -0.02em;
   top: clamp(-12px, -1.0vw, -6px);
@@ -88,7 +88,8 @@
   white-space: nowrap;
 }
 
-.kicker {
+.kicker{
+  margin: 0;
   font-family: var(--h1-font);
   font-size: clamp(34px, 4.2vw, 66px);
   letter-spacing: 0.46em;
@@ -97,14 +98,14 @@
   opacity: .92;
 }
 
-.sub {
+.sub{
   margin-top: 14px;
   font-size: 13px;
   letter-spacing: 0.16em;
   color: rgba(242,240,234,.58);
 }
 
-.leftNote {
+.leftNote{
   margin-top: 14px;
   max-width: 54ch;
   font-size: 12px;
@@ -113,7 +114,7 @@
   color: rgba(242,240,234,.44);
 }
 
-.leftFade {
+.leftFade{
   position: absolute;
   left: -14%;
   top: -26%;
@@ -127,20 +128,20 @@
 }
 
 /* divider */
-.divider {
+.divider{
   height: 100%;
   background: rgba(242,240,234,.10);
   opacity: .9;
 }
 
 /* RIGHT */
-.right {
+.right{
   position: relative;
   padding: clamp(18px, 2.2vw, 34px) 0;
 }
 
 /* slip（ガラス調） */
-.slip {
+.slip{
   position: relative;
   padding: clamp(28px, 2.6vw, 44px);
   border-radius: 14px;
@@ -155,7 +156,7 @@
 }
 
 /* "ガラスの反射"を上に一枚 */
-.slip::after {
+.slip::after{
   content: "";
   position: absolute;
   inset: 0;
@@ -168,51 +169,51 @@
   opacity: .95;
 }
 
-.slipTop {
+.slipTop{
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 14px;
 }
 
-.slipLabel {
+.slipLabel{
   font-size: 11px;
   letter-spacing: 0.34em;
   color: rgba(242,240,234,.56);
 }
 
-.slipHint {
+.slipHint{
   font-size: 11px;
   letter-spacing: 0.18em;
   color: rgba(242,240,234,.36);
 }
 
-.list {
+.list{
   margin-top: 18px;
   display: grid;
   gap: 12px;
 }
 
-.row {
+.row{
   display: grid;
   grid-template-columns: 44px 1fr;
   align-items: baseline;
   column-gap: 18px;
 }
 
-.no {
+.no{
   font-size: 11px;
   letter-spacing: 0.32em;
   color: rgba(242,240,234,.34);
 }
 
-.txt {
+.txt{
   font-size: 13px;
   letter-spacing: 0.10em;
   color: rgba(242,240,234,.78);
 }
 
-.note {
+.note{
   margin-top: 14px;
   font-size: 12px;
   letter-spacing: 0.06em;
@@ -220,7 +221,7 @@
 }
 
 /* CTA：ボタンにしない。線と文字で"合図" */
-.cta {
+.cta{
   margin-top: 18px;
   display: inline-flex;
   align-items: baseline;
@@ -237,7 +238,7 @@
 }
 
 .cta::before,
-.cta::after {
+.cta::after{
   content: "";
   position: absolute;
   left: 0;
@@ -246,18 +247,18 @@
   background: linear-gradient(90deg, transparent, rgba(242,240,234,.18), transparent);
   opacity: .95;
 }
-.cta::before { top: 0; }
-.cta::after  { bottom: 0; }
+.cta::before{ top: 0; }
+.cta::after{ bottom: 0; }
 
-.cta:hover { opacity: .92; }
+.cta:hover{ opacity: .92; }
 
-.arrow {
+.arrow{
   opacity: .58;
   transform: translateY(-1px);
 }
 
-/* channels（機能臭を"気配"に落とす） */
-.channelsCap {
+/* channels（重複回避の一言だけ） */
+.channelsCap{
   margin-top: 12px;
   font-size: 12px;
   letter-spacing: .06em;
@@ -265,41 +266,8 @@
   opacity: .86;
 }
 
-.channelsRow {
-  margin-top: 8px;
-  display: inline-flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-  opacity: .62;
-}
-
-.chLink {
-  font-size: 12px;
-  letter-spacing: .14em;
-  color: rgba(242,240,234,.64);
-  text-decoration: none;
-  opacity: .86;
-  position: relative;
-  padding-bottom: 4px;
-}
-
-.chLink::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 88%;
-  height: 1px;
-  background: rgba(242,240,234,.14);
-}
-
-.chLink:hover { opacity: 1; }
-
-.dot { color: rgba(242,240,234,.22); }
-
 /* セクション終端の気配 */
-.footerLine {
+.footerLine{
   position: relative;
   z-index: 2;
   margin-top: clamp(78px, 7.6vw, 120px);
@@ -307,15 +275,14 @@
   background: rgba(242,240,234,.06);
 }
 
-@media (max-width: 980px) {
-  .inner {
+@media (max-width: 980px){
+  .inner{
     grid-template-columns: 1fr;
     gap: 26px;
     align-items: start;
   }
-  .divider  { display: none; }
-  .kicker   { letter-spacing: 0.34em; }
+  .divider{ display: none; }
+  .kicker{ letter-spacing: 0.34em; }
   .watermark{ letter-spacing: 0.22em; }
-  .slip::before,
-  .slip::after { display: none; }
+  .slip::after{ display: none; }
 }

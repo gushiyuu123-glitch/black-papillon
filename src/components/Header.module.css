@@ -1,3 +1,5 @@
+/* src/components/Header.module.css */
+
 .header{
   position: fixed;
   top: 0;
@@ -27,13 +29,12 @@
   padding: 0 var(--gutter);
 }
 
-/* ロゴ中心を25%地点に固定 */
+/* ロゴ中心を任意の%地点に固定 */
 .logoStage{
   position: absolute;
   left: var(--hd-left, 25%);
   top: 50%;
   transform: translate(-50%, -50%);
-  pointer-events: auto;
 }
 
 .logoLink{
@@ -41,6 +42,11 @@
   display: grid;
   place-items: center;
   text-decoration: none;
+}
+
+.logoLink:focus-visible{
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
 }
 
 .logo{
@@ -65,16 +71,15 @@
   pointer-events: none;
   user-select: none;
 }
+
+/* NAV：右側の索引（気配） */
 .nav{
   position: absolute;
   right: var(--gutter);
-  top: 50%;
+  top: calc(50% - 9px);
   transform: translateY(-50%);
   display: flex;
   gap: clamp(16px, 1.8vw, 26px);
-
-  pointer-events: auto;
-  opacity: 0.52; /* ← “機能”じゃなく気配 */
 }
 
 .navItem{
@@ -82,9 +87,11 @@
   place-items: center;
   padding: 10px 8px; /* 見た目より当たり判定広く */
   text-decoration: none;
+
+  opacity: 0.48; /* ← “機能”じゃなく気配 */
 }
 
-.navItem:hover{ opacity: 0.9; }
+.navItem:hover{ opacity: 0.75; }
 
 .navItem:focus-visible{
   outline: 2px solid var(--focus);
@@ -92,15 +99,8 @@
 }
 
 .navSvg{
-  height: clamp(10px, 1.0vw, 14px);
+  height: clamp(9px, .92vw, 13px);
   width: auto;
   display: block;
-  opacity: 0.92;
-}
-/* 右ナビを “気配” にする */
-.nav{ opacity: 0.48; }
-.navSvg{ height: clamp(9px, .92vw, 13px); opacity: 0.86; }
-.navItem:hover{ opacity: 0.75; } /* hoverで主張しすぎない */
-.nav{
-  top: calc(50% - 9px);
+  opacity: 0.86;
 }

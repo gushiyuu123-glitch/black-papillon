@@ -34,34 +34,44 @@ export default function ParallaxMedia({
     // ✅ 画像ロード後にrefresh（ズレ＝効いてない感を潰す）
     const onLoad = () => ScrollTrigger.refresh();
     const imgs = [fg, bg].filter(Boolean);
+
     imgs.forEach((img) => {
       if (!img.complete) img.addEventListener("load", onLoad, { once: true });
     });
 
+    // ✅ キャッシュ済みでloadが飛ばないケースの保険
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+
     // reduce / coarse は安全側（動きもズームも殺す）
     if (reduce || (disabledOnCoarse && coarse)) {
-      gsap.set(fg, { y: 0, scale: 1, clearProps: "filter" });
-      if (bg) gsap.set(bg, { y: 0, scale: 1, clearProps: "filter" });
+      gsap.set(fg, { y: 0, scale: 1, clearProps: "transform" });
+      if (bg) gsap.set(bg, { y: 0, scale: 1, clearProps: "transform" });
+
       return () => {
         imgs.forEach((img) => img.removeEventListener("load", onLoad));
       };
     }
 
-    // ✅ containは背景だけだと体感薄い → “移動量”を増幅
+    // containは背景だけだと体感薄い → “移動量”を増幅
     const amp = fit === "contain" ? 2.1 : 1.35;
 
-    // ✅ percentじゃなくpx基準（wrap高に比例）で確実に動いて見える
+    // percentではなくwrap高に比例（確実に動いて見える）
     const travel = () =>
       Math.round(wrap.clientHeight * (yPercent / 100) * amp);
 
-    const target = fit === "contain" && bg ? bg : fg;
+    // contain時は背景を動かす（fgは静止）
+    const useBg = fit === "contain" && !!bg;
+    const target = useBg ? bg : fg;
+
+    // ✅ blur背景は端割れしやすいので最低スケールを上げる
+    const targetScale = useBg ? Math.max(scale, 1.08) : scale;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
         target,
         {
           y: () => -travel(),
-          scale,
+          scale: targetScale,
           force3D: true,
           willChange: "transform",
         },
@@ -78,10 +88,9 @@ export default function ParallaxMedia({
         }
       );
 
-      // ✅ contain時：前景が完全静止だと「背景しか動いてない」感が出るので
-      // ごく薄く“像が整う”だけ足す（動きではなく気配）
-      if (fit === "contain" && bg) {
-        gsap.set(fg, { scale: 1.0, y: 0, force3D: true });
+      // contain時：前景が完全静止でもOK（動きは背景に集約）
+      if (useBg) {
+        gsap.set(fg, { y: 0, scale: 1, force3D: true });
       }
     }, wrap);
 
@@ -89,7 +98,7 @@ export default function ParallaxMedia({
       imgs.forEach((img) => img.removeEventListener("load", onLoad));
       ctx.revert();
     };
-  }, [yPercent, scale, disabledOnCoarse, fit]);
+  }, [src, yPercent, scale, disabledOnCoarse, fit]);
 
   return (
     <div
@@ -110,6 +119,7 @@ export default function ParallaxMedia({
           aria-hidden="true"
           loading="lazy"
           decoding="async"
+          draggable="false"
         />
       )}
 
@@ -120,6 +130,7 @@ export default function ParallaxMedia({
         alt={alt}
         loading="lazy"
         decoding="async"
+        draggable="false"
       />
 
       <div className={styles.veil} aria-hidden="true" />

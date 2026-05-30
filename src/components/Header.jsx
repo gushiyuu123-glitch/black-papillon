@@ -1,3 +1,4 @@
+// src/components/Header.jsx
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,7 +10,7 @@ const LOGO_SRC = "/type/BLACKPAPILLONheader1.svg";
 const BFLY_STATIC = "/type/b1.png";
 
 const WORKS_SVG = "/type/WORKS.svg";
-const PRICE_SVG = "/type/PRICEGUIDE.svg"; // これを使う
+const PRICE_SVG = "/type/PRICEGUIDE.svg";
 
 export default function Header({ heroId = "hero", logoLeft = 25 }) {
   const headerRef = useRef(null);
@@ -67,6 +68,7 @@ export default function Header({ heroId = "hero", logoLeft = 25 }) {
         if (r.bottom <= 0) show();
         else hide();
       };
+
       requestAnimationFrame(sync);
       setTimeout(sync, 80);
       window.addEventListener("hashchange", sync, { passive: true });
@@ -85,7 +87,7 @@ export default function Header({ heroId = "hero", logoLeft = 25 }) {
       ref={headerRef}
       className={styles.header}
       aria-label="Site header"
-      style={{ ["--hd-left"]: `${logoLeft}%` }}
+      style={{ "--hd-left": `${logoLeft}%` }}
     >
       <div className={styles.inner}>
         {/* ロゴ（クリックでトップへ） */}

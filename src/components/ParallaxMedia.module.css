@@ -27,7 +27,7 @@
   transform: translateZ(0);
 }
 
-/* ✅ contain用のぼかし背景（cover） */
+/* contain用のぼかし背景（cover） */
 .bg{
   position: absolute;
   inset: 0;
@@ -37,10 +37,12 @@
 
   opacity: var(--pm-bg-opacity);
   filter: blur(var(--pm-bg-blur)) saturate(.92) contrast(1.04) brightness(.85);
-  transform: scale(1.06); /* blurの端割れ防止 */
 
-  will-change: transform;
+  /* blurの端割れ防止（JS側がtransformを上書きするので“最低限”だけ） */
+  transform: scale(1.06);
+
   backface-visibility: hidden;
+  will-change: transform;
 }
 
 /* foreground */
@@ -49,32 +51,29 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  will-change: transform;
+
   transform: translate3d(0,0,0);
   backface-visibility: hidden;
+  will-change: transform;
+
   filter: saturate(.92) contrast(1.06);
   max-width: none;
 }
 
-/* cover（従来どおり） */
-.wrap[data-fit="cover"] .img{
-  inset: calc(-1 * var(--pm-inset));
-  width: auto;
-  height: auto;
-  object-fit: cover;
-}
+/* cover（本命） */
 .wrap[data-fit="cover"] .img{
   inset: calc(-1 * var(--pm-inset));
   width: calc(100% + var(--pm-inset) + var(--pm-inset));
   height: calc(100% + var(--pm-inset) + var(--pm-inset));
   object-fit: cover;
 }
-/* ✅ contain（引きに見せる本命） */
+
+/* contain（引きで見せる） */
 .wrap[data-fit="contain"] .img{
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain; /* ←ここで“引き”になる */
+  object-fit: contain;
 }
 
 /* veil */
@@ -124,6 +123,25 @@
 @media (pointer: coarse){
   .img{ filter: saturate(.95) contrast(1.03); }
 }
+
 @media (prefers-reduced-motion: reduce){
   .img, .bg{ will-change: auto; }
+}
+/* ParallaxMedia.module.css に追記 */
+
+/* wrapの安定化：height:100% を使わない運用なら不要だが、保険としてOK */
+/* .wrap { min-height: 320px; } ← これは既に入ってるはず */
+
+/* img: チラつき防止（既に入ってるなら不要） */
+.img{
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0);
+}
+
+/* noVeil / strongVeil（“効かせるためには class を付ける必要あり”） */
+.noVeil .veil{ opacity: 0; }
+
+.strongVeil{
+  --pm-veilTop: .62;
+  --pm-petrol: .26;
 }

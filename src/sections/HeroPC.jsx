@@ -1,5 +1,5 @@
 // src/sections/HeroPC.jsx
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import styles from "./HeroPC.module.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -18,7 +18,7 @@ export default function HeroPC() {
   const veilRef = useRef(null);
   const metaRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const root = heroRef.current;
     const left = leftRef.current;
     const img = imgRef.current;
@@ -38,9 +38,10 @@ export default function HeroPC() {
       const onLoad = () => ScrollTrigger.refresh();
       if (!img.complete) img.addEventListener("load", onLoad, { once: true });
 
-      // 初期
+      // 初期（左）
       gsap.set(leftItems, { opacity: 0, y: 18, scale: 0.995 });
 
+      // 初期（右：像が整う）
       gsap.set(img, {
         scale: 1.035,
         y: 10,
@@ -61,6 +62,7 @@ export default function HeroPC() {
         });
         if (veil) gsap.set(veil, { opacity: 1 });
         if (meta) gsap.set(meta, { opacity: 1, y: 0 });
+
         return () => img.removeEventListener("load", onLoad);
       }
 
@@ -89,7 +91,7 @@ export default function HeroPC() {
       }
       if (meta) tl.to(meta, { opacity: 1, y: 0, duration: 0.6 }, 0.55);
 
-      // Parallax
+      // Parallax（PCのみ）
       if (!coarse) {
         gsap.to(img, {
           yPercent: 8,
@@ -141,34 +143,42 @@ export default function HeroPC() {
             <span className={styles.k2}>NAHA, OKINAWA</span>
           </div>
 
-          <h1 className={styles.logo}>
+          {/* ✅ ロゴもHeroの同期に入れる（data-hero-item） */}
+          <h1 className={styles.logo} data-hero-item data-bfly-flap>
             <span className={styles.srOnly}>BLACK PAPILLON</span>
 
             <LogoSvgReveal src={LOGO_SRC} className={styles.logoSvgInline} />
-<Butterfly
+
+ <Butterfly
   triggerRef={heroRef}
   className={styles.bflyOnLogo}
   dir="/type"
-  scrub={1.05}          // 1.25 → 1.05（追従を自然に）
-  cycles={0.72}         // 0.62 → 0.72（羽ばたきの“生っぽさ”）
-  alpha={0.82}          // 0.76 → 0.82（気配を戻すなら）
-  drift={{ x: 10, y: 16, rot: 3 }}
-  driftScrub={0.85}     // 0.98 → 0.85（driftの追従を緩める）
-  introDelay={0.22}     // 0.32 → 0.22（出番を早める）
-  introDur={0.34}       // 0.50 → 0.34（“ぬるっ”を消す）
+
+  scrub={1.65}          // 1.05 → 1.65（追従ゆっくり）
+  cycles={0.34}         // 0.72 → 0.34（羽ばたき少なく）
+  alpha={0.74}          // 0.82 → 0.74（主張を落とす）
+
+  drift={{ x: 5, y: 8, rot: 1.3 }} // 10/16/3 → 小さく
+  driftScrub={0.93}     // 0.85 → 0.93（より馴染ませ）
+
+  introDelay={0.28}     // 0.22 → 0.28（出番を少し遅く）
+  introDur={0.46}       // 0.34 → 0.46（立ち上がりを穏やかに）
+
   disabledOnCoarse={true}
+
   flapOnHover={true}
   hoverScopeRef={heroRef}
   hoverSelector="[data-bfly-flap]"
-  hoverDur={0.62}       // 0.70 → 0.62（気持ち良い帯）
-  hoverCooldown={0.42}  // 0.55 → 0.42（反応が鈍い感じを消す）
+  hoverDur={0.78}       // 0.62 → 0.78（羽ばたきをゆっくり）
+  hoverCooldown={0.85}  // 0.42 → 0.85（連打感を消す）
 />
           </h1>
-<p className={styles.note} data-hero-item>
-  Carve Beauty.
-  <br />
-  美を刻む。
-</p>
+
+          <p className={styles.note} data-hero-item>
+            Carve Beauty.
+            <br />
+            美を刻む。
+          </p>
 
           <div className={styles.links} aria-label="Primary links" data-hero-item>
             <a className={styles.link} href="#works" data-bfly-flap>
@@ -181,8 +191,6 @@ export default function HeroPC() {
               BOOKING
             </a>
           </div>
-
-
         </div>
 
         <div className={styles.right} aria-label="Hero visual">
@@ -195,10 +203,12 @@ export default function HeroPC() {
               decoding="async"
               fetchPriority="high"
             />
+
             <div ref={veilRef} className={styles.riverVeil} aria-hidden="true" />
-   <div ref={metaRef} className={styles.riverMeta} aria-hidden="true">
-  HEALED PROOF
-</div>
+
+            <div ref={metaRef} className={styles.riverMeta} aria-hidden="true">
+              HEALED PROOF
+            </div>
           </div>
 
           <div className={styles.spine} aria-hidden="true" />

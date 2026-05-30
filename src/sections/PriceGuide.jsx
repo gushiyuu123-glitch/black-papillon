@@ -1,3 +1,4 @@
+// src/sections/PriceGuide.jsx
 import { useRef } from "react";
 import styles from "./PriceGuide.module.css";
 import Reveal from "../components/Reveal";
@@ -7,7 +8,7 @@ import LogoSvgReveal from "../components/SvgStaggerReveal.jsx";
 const TITLE_SVG = "/type/PRICEGUIDE.svg";
 const BF_DIR = "/type";
 
-// 数字は仮。あとで差し替え
+// 数字は仮（後で差し替え）
 const TIERS = [
   { key: "one", name: "ワンポイント", price: "¥18,000〜", sessions: "1回", note: "" },
   { key: "std", name: "標準", price: "¥45,000〜¥95,000", sessions: "1〜2回", note: "" },
@@ -28,27 +29,28 @@ export default function PriceGuide() {
       ref={sectionRef}
       id="price"
       className={styles.section}
-      aria-labelledby="price-label"
+      aria-labelledby="price-title"
     >
       <div className={styles.inner}>
         <header className={styles.head}>
           <Reveal preset="base" y={12}>
-            <p id="price-label" className={styles.kicker}>
-              料金
-            </p>
+            <p className={styles.kicker}>料金</p>
           </Reveal>
 
-          {/* タイトル + 蝶（Heroと同じ：親をrelativeにして、その中でabsolute配置） */}
+          {/* タイトル + 蝶（Heroと同じ：親relative + 中でabsolute） */}
           <div className={styles.titleWrap} data-bfly-flap>
             <Reveal preset="base" y={18} className={styles.titleReveal}>
               <div className={styles.titleStage}>
+                <h2 id="price-title" className={styles.srOnly}>
+                  PRICE GUIDE
+                </h2>
+
                 <LogoSvgReveal
                   className={styles.titleSvg}
                   src={TITLE_SVG}
                   ariaLabel="PRICE GUIDE"
                 />
 
-                {/* ✅ 自然寄り（“追従は軽く、揺れは小さく、出方は速め”） */}
                 <Butterfly
                   triggerRef={sectionRef}
                   className={styles.bflyOnTitle}
@@ -57,7 +59,7 @@ export default function PriceGuide() {
                   cycles={0.72}
                   alpha={0.78}
                   drift={{ x: 10, y: 16, rot: 3 }}
-                  driftScrub={0.90}
+                  driftScrub={0.9}
                   introDelay={0.22}
                   introDur={0.34}
                   disabledOnCoarse={true}
@@ -71,10 +73,9 @@ export default function PriceGuide() {
             </Reveal>
           </div>
 
+          {/* ✅ 二度言い削除：leadは1文だけ */}
           <Reveal preset="base" y={12} delay={0.05}>
-            <p className={styles.lead}>
-              料金は下絵が決まってから確定します。サイズと密度で前後します。
-            </p>
+            <p className={styles.lead}>確定は下絵が決まってから。</p>
           </Reveal>
 
           <Reveal preset="base" y={12} delay={0.08}>
@@ -93,7 +94,7 @@ export default function PriceGuide() {
               role="listitem"
               data-bfly-flap
             >
-              <Reveal preset="base" y={18} delay={0.10 + i * 0.09}>
+              <Reveal preset="base" y={18} delay={0.1 + i * 0.09}>
                 <div className={styles.tierTop}>
                   <p className={styles.tierName}>{t.name}</p>
                   <p className={styles.tierPrice}>{t.price}</p>
@@ -114,13 +115,11 @@ export default function PriceGuide() {
 
         <Reveal preset="base" y={14} delay={0.26}>
           <div className={styles.adjust}>
-            <p className={styles.adjustTitle}>微調整（目安：1ヶ月）</p>
+            <p className={styles.adjustTitle}>微調整 / アフターフォロー</p>
             <p className={styles.adjustText}>
-              施術後1ヶ月を目安に一度確認します。必要な場合は微調整をご案内します。
+              施術後1ヶ月を目安に一度確認します。必要な場合のみご案内します。
             </p>
-            <p className={styles.adjustFoot}>
-              ※アフターケアを守っていただいた場合に限ります。
-            </p>
+            <p className={styles.adjustFoot}>※アフターケアを守っていただいた場合に限ります。</p>
           </div>
         </Reveal>
 

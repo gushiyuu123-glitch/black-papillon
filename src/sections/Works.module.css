@@ -5,6 +5,12 @@
   color:#F2F0EA;
   position:relative;
 
+  /* 2枚目/04のズレ量はここだけで管理 */
+  --slotBShift: clamp(-10px, -1.1vw, -22px);
+
+  /* ヘッダー固定がある場合のアンカー事故保険（任意） */
+  scroll-margin-top: clamp(92px, 7.2vw, 120px);
+
   /* “Hero→WORKS”の温度を落とさない余白（上を厚め） */
   padding: clamp(110px, 12vw, 200px) 0 clamp(96px, 10vw, 190px);
 }
@@ -123,7 +129,7 @@
 .slotA{ height: clamp(560px, 78vh, 920px); }
 .slotB{
   height: clamp(360px, 46vh, 540px);
-  transform: translateX(clamp(-8px, -0.8vw, -16px));
+  transform: translateX(var(--slotBShift));
 }
 
 /* tail：沈黙で流す（リズムだけ少し入れる） */
@@ -139,6 +145,14 @@
 /* 交互にほんの少しだけズラす（退屈回避 / 事故化しない量） */
 .tailItem:nth-child(even) .slotTail{
   transform: translateX(clamp(0px, 1.2vw, 18px));
+}
+
+/* 4枚目（slotBAlign）は“必ず”slotBShiftで勝たせる */
+.slotTail.slotBAlign{
+  transform: translateX(var(--slotBShift));
+}
+.tailItem:nth-child(even) .slotTail.slotBAlign{
+  transform: translateX(var(--slotBShift));
 }
 
 /* ------- RIGHT：背景＋主役オブジェクト ------- */
@@ -170,8 +184,8 @@
   height: clamp(560px, 78vh, 920px);
   overflow: hidden;
 
-  margin-left: auto; /* 右寄せ */
-  transform: translateX(clamp(0px, 1.2vw, 18px)); /* “少しだけ右” */
+  margin-left: auto;
+  transform: translateX(clamp(0px, 1.2vw, 18px));
 }
 
 /* 右背景 */
@@ -213,8 +227,12 @@
   filter: drop-shadow(0 18px 44px rgba(0,0,0,0.45));
   user-select:none;
 }
-
-.bflyReveal{ display:block; }
+.worksSvg svg{
+  display:block;
+  width:100%;
+  height:auto;
+  overflow: visible;
+}
 
 /* 蝶＋コピー：中央より少し右 */
 .bflyGroup{
@@ -244,7 +262,6 @@
   text-shadow: 0 12px 36px rgba(0,0,0,0.55);
 }
 
-.metaReveal{ display:block; }
 .rightMeta{
   position:absolute;
   left: clamp(22px, 2.6vw, 34px);
@@ -278,33 +295,5 @@
   }
   .slotB{ transform:none; }
   .tailItem:nth-child(even) .slotTail{ transform:none; }
-}
-/* ===== slotB shift contract (FINAL) ===== */
-.section{
-  --slotBShift: clamp(-10px, -1.1vw, -22px);
-}
-/* 2枚目も変数で動かす（これでズレ量が一箇所管理になる） */
-.slotB{
-  transform: translateX(var(--slotBShift));
-}
-
-/* 4枚目（slotBAlign）も同じ */
-.slotTail.slotBAlign{
-  transform: translateX(var(--slotBShift));
-}
-
-/* もし “偶数だけズラす” があるなら、04だけ上書きで確実に勝たせる */
-.tailItem:nth-child(even) .slotTail.slotBAlign{
-  transform: translateX(var(--slotBShift));
-}
-/* append: inline svg sizing for SvgStaggerReveal */
-.worksSvg{
-  display: block;
-}
-
-.worksSvg svg{
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
+  .slotTail.slotBAlign{ transform:none; }
 }

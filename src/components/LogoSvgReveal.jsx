@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 
 /* -------------------------------------------------------
@@ -104,13 +104,16 @@ export default function LogoSvgReveal({
       return;
     }
 
-    // abort previous
+    // abort previous (このインスタンスの fetch のみ)
     abortRef.current?.abort?.();
     const ac = new AbortController();
     abortRef.current = ac;
 
     fetch(src, { signal: ac.signal })
-      .then((r) => r.text())
+      .then((r) => {
+        if (!r.ok) throw new Error(`Failed to fetch SVG: ${r.status}`);
+        return r.text();
+      })
       .then((txt) => {
         SVG_CACHE.set(src, txt);
         setMarkup(txt);
@@ -120,9 +123,7 @@ export default function LogoSvgReveal({
         setMarkup("");
       });
 
-    return () => {
-      ac.abort();
-    };
+    return () => ac.abort();
   }, [src]);
 
   useLayoutEffect(() => {
@@ -135,7 +136,7 @@ export default function LogoSvgReveal({
     const svg = wrap.querySelector("svg");
     if (!svg) return;
 
-    // make svg inert for a11y
+    // make svg inert for a11y（親側でsrOnly等を用意する想定）
     svg.setAttribute("aria-hidden", "true");
     svg.setAttribute("focusable", "false");
 
@@ -151,13 +152,13 @@ export default function LogoSvgReveal({
       fallback,
     });
 
-    // deterministic shuffle (so毎回同じ“署名”の順)
+    // deterministic shuffle (毎回同じ“署名”の順)
     if (shuffle && targets.length > 1) {
       targets = [...targets];
       shuffleInPlace(targets, hashStr(src));
     }
 
-    // reduced: show immediately
+    // reduced: show immediately（+ callbackも呼ぶ）
     if (reduce) {
       gsap.set(targets, {
         opacity: 1,
@@ -166,6 +167,8 @@ export default function LogoSvgReveal({
         scale: 1,
         clearProps: "transform,filter,opacity",
       });
+      onReady?.(svg);
+      onComplete?.();
       return;
     }
 
@@ -203,12 +206,9 @@ export default function LogoSvgReveal({
     });
 
     tlRef.current = tl;
-
     onReady?.(svg);
 
-    return () => {
-      tl.kill();
-    };
+    return () => tl.kill();
   }, [
     markup,
     src,
