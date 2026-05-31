@@ -1,0 +1,184 @@
+/* src/sections_sp/CareSP.module.css */
+
+.section{
+  position: relative;
+  padding: clamp(96px, 12vw, 150px) 0 clamp(86px, 10vw, 140px);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* 背景（フルワイド） */
+.section::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--care-bg);
+  background-size: cover;
+  background-position: 28% 50%;
+  opacity: .20;
+  transform: scale(1.03);
+  filter: saturate(.92) contrast(1.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 可読性のベール（SPは中央を均す） */
+.section::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 120% at 18% 18%, rgba(242,240,234,.04), transparent 56%),
+    linear-gradient(180deg,
+      rgba(7,8,10,.86) 0%,
+      rgba(7,8,10,.76) 42%,
+      rgba(7,8,10,.84) 100%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.inner{
+  position: relative;
+  z-index: 1;
+  width: min(720px, 92vw);
+  margin: 0 auto;
+}
+
+/* ===== Head ===== */
+.head{
+  max-width: 58ch;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(242,240,234,.10);
+}
+
+.kicker{
+  font-size: 11px;
+  letter-spacing: 0.30em;
+  color: rgba(242,240,234,.42);
+  display: inline-block;
+  margin: 0;
+}
+
+.title{
+  margin: 14px 0 0;
+  font-family: var(--h2-font);
+  font-weight: 650;
+  font-size: clamp(19px, 5.4vw, 24px);
+  letter-spacing: 0.02em;
+  line-height: 1.28;
+  color: var(--text);
+}
+
+.lead{
+  margin: 12px 0 0;
+  max-width: 52ch;
+  color: rgba(242,240,234,.66);
+}
+
+/* ===== Ledgers (SP: 1 column) ===== */
+.ledgers{
+  margin-top: clamp(18px, 4.6vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 4.6vw, 26px);
+}
+
+/* 右側だけ濃くする“幕”はSPでは薄く、広く */
+.ledgers{
+  position: relative;
+}
+.ledgers::before{
+  content: "";
+  position: absolute;
+  inset: -14px;
+  background: linear-gradient(180deg,
+    rgba(7,8,10,.10) 0%,
+    rgba(7,8,10,.22) 48%,
+    rgba(7,8,10,.18) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ledgerReveal{ display:block; }
+
+.ledger{
+  position: relative;
+  z-index: 1;
+  padding: 0;
+}
+
+/* 見出し */
+.ledgerHead{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(242,240,234,.14);
+}
+
+.ledgerTitle{
+  font-family: var(--h2-font);
+  font-size: 12px;
+  letter-spacing: 0.30em;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+}
+
+.ledgerNote{
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: rgba(242,240,234,.45);
+}
+
+/* DL */
+.dl{ margin-top: 12px; }
+
+.row{
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(242,240,234,.10);
+}
+.row:last-child{ border-bottom: 0; }
+
+.dt{
+  font-size: 12px;
+  letter-spacing: 0.10em;
+  color: rgba(242,240,234,.78);
+}
+
+.dd{
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* フィルタ（Hard line） */
+.promise{
+  position: relative;
+  z-index: 1;
+  margin: clamp(18px, 4.6vw, 26px) 0 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(242,240,234,.10);
+  color: rgba(242,240,234,.78);
+  letter-spacing: 0.04em;
+}
+
+.hairline{
+  position: relative;
+  z-index: 1;
+  margin-top: clamp(22px, 5vw, 44px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+/* SP専用保険 */
+@media (min-width: 900px){
+  .section{ display:none; }
+}

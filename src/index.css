@@ -237,3 +237,7 @@ html.lenis body{ height: auto; }
   transition-duration: 1ms;
   transition-behavior: allow-discrete;
 }
+html, body { overflow-x: clip; }
+@supports not (overflow: clip){
+  html, body { overflow-x: hidden; }
+}

@@ -2,13 +2,21 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./ParallaxMedia.module.css";
-
+let _pmRefreshRaf = 0;
+function pmScheduleRefresh() {
+  if (_pmRefreshRaf) return;
+  _pmRefreshRaf = requestAnimationFrame(() => {
+    _pmRefreshRaf = 0;
+    ScrollTrigger.refresh();
+  });
+}
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ParallaxMedia({
   src,
   alt = "",
   className = "",
+  enabled = true,
   yPercent = 6,
   scale = 1.02,
   disabledOnCoarse = true,
@@ -25,14 +33,15 @@ export default function ParallaxMedia({
     const fg = fgRef.current;
     const bg = bgRef.current;
     if (!wrap || !fg) return;
-
+if (!enabled) return;
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
     const coarse =
       window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
 
     // ✅ 画像ロード後にrefresh（ズレ＝効いてない感を潰す）
-    const onLoad = () => ScrollTrigger.refresh();
+   const onLoad = () => pmScheduleRefresh();
+
     const imgs = [fg, bg].filter(Boolean);
 
     imgs.forEach((img) => {
@@ -40,7 +49,7 @@ export default function ParallaxMedia({
     });
 
     // ✅ キャッシュ済みでloadが飛ばないケースの保険
-    requestAnimationFrame(() => ScrollTrigger.refresh());
+    pmScheduleRefresh();
 
     // reduce / coarse は安全側（動きもズームも殺す）
     if (reduce || (disabledOnCoarse && coarse)) {
@@ -98,7 +107,7 @@ export default function ParallaxMedia({
       imgs.forEach((img) => img.removeEventListener("load", onLoad));
       ctx.revert();
     };
-  }, [src, yPercent, scale, disabledOnCoarse, fit]);
+  }, [src, enabled, yPercent, scale, disabledOnCoarse, fit]);
 
   return (
     <div

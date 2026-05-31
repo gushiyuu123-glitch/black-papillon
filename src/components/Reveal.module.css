@@ -19,6 +19,7 @@
   opacity: 1;
   transform: translate3d(0,0,0) scale(1);
   filter: blur(0);
+   will-change: auto;
 }
 
 /* reduced-motion は最初から見せる */
@@ -30,4 +31,7 @@
     transition: none !important;
     will-change: auto !important;
   }
+}
+@media (pointer: coarse){
+  .reveal{ will-change: auto; }
 }
