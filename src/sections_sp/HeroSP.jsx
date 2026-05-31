@@ -147,7 +147,7 @@ export default function HeroSP() {
               disabledOnCoarse={true}
               flapOnHover={true}
               hoverScopeRef={heroRef}
-              hoverSelector="[data-bfly-flap]"
+             hoverSelector='h1[data-bfly-flap]'
               hoverDur={0.72}
               hoverCooldown={0.85}
             />

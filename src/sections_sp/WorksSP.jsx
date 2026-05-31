@@ -5,8 +5,8 @@ import styles from "./WorksSP.module.css";
 import Reveal from "../components/Reveal";
 import ParallaxMedia from "../components/ParallaxMedia";
 import SvgStaggerReveal from "../components/SvgStaggerReveal";
+import Butterfly from "../components/Butterfly"; // ✅ 追加
 
-// PCの配列はそのまま（世界観・選球眼を維持）
 const WORKS_ITEMS = [
   { no: "01", tag: "FOREARM",  sub: "FINE LINE",    src: "/works/forearm.png",     alt: "Forearm tattoo close-up" },
   { no: "02", tag: "SHOULDER", sub: "BLACK & GREY", src: "/works/shoulder.jpeg",   alt: "Shoulder tattoo close-up" },
@@ -17,6 +17,7 @@ const WORKS_ITEMS = [
 
 const RIGHT_BG = "/works-bg1.jpeg";
 const WORKS_SVG = "/type/WORKS.svg";
+const BF_DIR = "/type"; // ✅ 追加（b1〜のある場所）
 
 function Ticket({ no, tag, sub }) {
   return (
@@ -31,7 +32,6 @@ function Ticket({ no, tag, sub }) {
 }
 
 function Frame({ item, className = "", tone = "hit" }) {
-  // SPは初動を軽く：hitは cover（bg二重を避ける）、tailは contain（引き）
   const fit = tone === "tail" ? "contain" : "cover";
 
   const pmTune =
@@ -74,9 +74,8 @@ export default function WorksSP() {
       aria-labelledby="works-title_sp"
     >
       <div className={styles.inner}>
-        {/* 1) 証拠が先：ヒット1枚目の上に “ヘッダーを薄く重ねる” */}
         <div className={styles.top}>
-          <div className={styles.headOverlay} aria-hidden="false">
+          <div className={styles.headOverlay}>
             <Reveal preset="base" y={12}>
               <h2 id="works-title_sp" className={styles.kicker}>
                 WORKS
@@ -91,10 +90,8 @@ export default function WorksSP() {
           <Frame item={hit[0]} className={styles.slotA} tone="hit" />
         </div>
 
-        {/* 2) 2枚目：少し柔らかく、1枚目の余韻を殺さない */}
         <Frame item={hit[1]} className={styles.slotB} tone="soft" />
 
-        {/* 3) 署名ブロック（PC右の世界観をSPに移植） */}
         <div className={styles.signature} aria-label="Works signature">
           <Reveal preset="base" className={styles.sigBgReveal}>
             <ParallaxMedia
@@ -105,17 +102,36 @@ export default function WorksSP() {
               scale={1.04}
               fit="cover"
             />
+            
+                <Butterfly
+                  triggerRef={sectionRef}
+                  className={styles.bflyOnWorks}
+                  dir={BF_DIR}
+                  scrub={1.85}
+                  cycles={0.22}
+                  alpha={0.62}
+                  drift={{ x: 4, y: 8, rot: 1.2 }}
+                  driftScrub={1.25}
+                  introDelay={0.18}
+                  introDur={0.46}
+                  disabledOnCoarse={true}
+                  flapOnHover={false}
+                />
           </Reveal>
 
           <div className={styles.sigOverlay}>
             <Reveal preset="base" className={styles.worksSvgReveal}>
-              <SvgStaggerReveal
-                src={WORKS_SVG}
-                className={styles.worksSvg}
-                stagger={0.06}
-                duration={0.55}
-                y={10}
-              />
+              {/* ✅ SVGをステージ化して、その“下”に蝶 */}
+              <div className={styles.worksStage}>
+                <SvgStaggerReveal
+                  src={WORKS_SVG}
+                  className={styles.worksSvg}
+                  stagger={0.06}
+                  duration={0.55}
+                  y={10}
+                />
+
+              </div>
             </Reveal>
 
             <p className={styles.sigCopy}>Made to Last.</p>
@@ -128,7 +144,6 @@ export default function WorksSP() {
           <div className={styles.sigSpine} aria-hidden="true" />
         </div>
 
-        {/* 4) tail：沈黙で流す（SPでもリズムは入れるが事故らせない） */}
         <div className={styles.tail} role="list" aria-label="Works gallery (SP)">
           {tail.map((it, idx) => (
             <article

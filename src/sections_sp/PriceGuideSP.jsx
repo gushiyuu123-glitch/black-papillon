@@ -36,8 +36,8 @@ export default function PriceGuideSP() {
             <p className={styles.kicker}>料金</p>
           </Reveal>
 
-          {/* タイトル（SVG）+ 蝶 */}
-          <div className={styles.titleWrap} data-bfly-flap>
+          {/* タイトル（SVG）+ 蝶：hover対象はタイトルだけ */}
+          <div className={styles.titleWrap} data-bfly-flap="title">
             <Reveal preset="base" y={18} className={styles.titleReveal}>
               <div className={styles.titleStage}>
                 <h2 id="price-title_sp" className={styles.srOnly}>
@@ -57,19 +57,19 @@ export default function PriceGuideSP() {
                   triggerRef={sectionRef}
                   className={styles.bflyOnTitle}
                   dir={BF_DIR}
-                  scrub={1.35}          // 少し遅く
-                  cycles={0.34}         // 羽ばたき少なめ
+                  scrub={1.65}
+                  cycles={0.28}
                   alpha={0.72}
-                  drift={{ x: 6, y: 10, rot: 1.6 }}
-                  driftScrub={0.93}
-                  introDelay={0.20}
-                  introDur={0.42}
+                  drift={{ x: 4, y: 7, rot: 1.2 }}
+                  driftScrub={1.2}
+                  introDelay={0.2}
+                  introDur={0.52}
                   disabledOnCoarse={true}
                   flapOnHover={true}
                   hoverScopeRef={sectionRef}
-                  hoverSelector="[data-bfly-flap]"
-                  hoverDur={0.78}
-                  hoverCooldown={0.90}
+                  hoverSelector='[data-bfly-flap="title"]'
+                  hoverDur={0.72}
+                  hoverCooldown={0.95}
                 />
               </div>
             </Reveal>
@@ -86,10 +86,10 @@ export default function PriceGuideSP() {
           </Reveal>
         </header>
 
-        {/* SP：1列帳簿 */}
+        {/* SP：1列帳簿（tierにはhoverを付けない） */}
         <div className={styles.tiers} role="list" aria-label="Price tiers (SP)">
           {TIERS.map((t, i) => (
-            <article key={t.key} className={styles.tier} role="listitem" data-bfly-flap>
+            <article key={t.key} className={styles.tier} role="listitem">
               <Reveal preset="base" y={16} delay={0.10 + i * 0.08}>
                 <div className={styles.tierTop}>
                   <p className={styles.tierName}>{t.name}</p>
@@ -115,7 +115,9 @@ export default function PriceGuideSP() {
             <p className={styles.adjustText}>
               施術後1ヶ月を目安に一度確認します。必要な場合のみご案内します。
             </p>
-            <p className={styles.adjustFoot}>※アフターケアを守っていただいた場合に限ります。</p>
+            <p className={styles.adjustFoot}>
+              ※アフターケアを守っていただいた場合に限ります。
+            </p>
           </div>
         </Reveal>
 

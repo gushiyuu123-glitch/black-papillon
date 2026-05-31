@@ -226,3 +226,33 @@
 .tailEven .slotTail{
   transform: translateX(clamp(0px, 2.6vw, 18px));
 }
+/* ===== WORKS SVG stage + butterfly (SP) ===== */
+.worksStage{
+  position: relative;
+  display: inline-block;
+  padding-bottom: clamp(30px, 6.2vw, 44px); /* 蝶の“居場所”を確保 */
+}
+
+/* SVGの下に置く蝶（右寄り） */
+/* SVGの上に“載せる”＝中央寄り左下 */
+.bflyOnWorks{
+  position: absolute;
+
+  /* ✅ 右→left基準に変更（中央寄り左下） */
+  left: 54%;
+  top: 51%;
+
+  width: clamp(44px, 10.5vw, 64px);
+  height: clamp(44px, 10.5vw, 64px);
+
+  pointer-events: none;
+  z-index: 3;
+
+  opacity: .78;
+  transform: translate(-50%, -50%) rotate(-8deg);
+
+  filter:
+    brightness(1.14) contrast(1.05)
+    drop-shadow(0 10px 26px rgba(0,0,0,.34))
+    drop-shadow(0 0 14px rgba(242,240,234,.10));
+}

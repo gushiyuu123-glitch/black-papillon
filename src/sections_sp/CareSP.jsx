@@ -5,7 +5,7 @@ import Reveal from "../components/Reveal";
 const PROOF_IMG = "/care/care-proof.png";
 
 const PROCESS = [
-  ["予約", "部位・サイズ・イメージを送る（短くてOK）"],
+   ["予約", "部位・サイズ・イメージを送る"],
   ["下絵確認", "当日、線と配置を決める。ここで止められます。"],
   ["施術", "休憩を挟みながら進めます"],
   ["ケア", "当日から数日分の手順を渡します"],

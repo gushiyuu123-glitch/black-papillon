@@ -18,6 +18,12 @@ const SEND = [
   { no: "03", text: "希望時期" },
 ];
 
+const NEXT = [
+  { no: "A", text: "内容確認 → 返信（流れ / 候補日）" },
+  { no: "B", text: "当日、線と配置を決める（止められます）" },
+  { no: "C", text: "下絵確定後に、金額と日程を確定" },
+];
+
 export default function Booking() {
   const sectionRef = useRef(null);
   const bgRef = useRef(null);
@@ -31,13 +37,13 @@ export default function Booking() {
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
     const coarse = window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
 
-    // PCだけ（SPは最後に作る方針）
+    // PCだけ（SPは別）
     if (reduce || coarse) {
       gsap.set(bg, { yPercent: 0, scale: 1, clearProps: "willChange" });
       return;
     }
 
-    const BG_Y = 10; // “見える”程度に効かせる
+    const BG_Y = 10;
     const BG_SCALE = 1.12;
 
     const ctx = gsap.context(() => {
@@ -97,7 +103,7 @@ export default function Booking() {
           </Reveal>
 
           <Reveal preset="base" y={14} delay={0.05}>
-            <p className={styles.sub}>まずイメージだけ送ってください。</p>
+<p className={styles.sub}>部位やサイズ感、参考（画像・URL）、希望時期を送ってください。</p>
           </Reveal>
 
           <Reveal preset="base" y={12} delay={0.09}>
@@ -116,9 +122,13 @@ export default function Booking() {
         <div className={styles.right} aria-label="Booking slip">
           <Reveal preset="slow" y={16} delay={0.08}>
             <div className={styles.slip}>
+              {/* “帳簿の背骨” */}
+              <div className={styles.spine} aria-hidden="true" />
+
+              {/* SEND */}
               <div className={styles.slipTop}>
                 <p className={styles.slipLabel}>SEND</p>
-                <p className={styles.slipHint}>3点だけ</p>
+                <p className={styles.slipHint}>あると早い</p>
               </div>
 
               <div className={styles.list} role="list" aria-label="送る内容">
@@ -132,11 +142,34 @@ export default function Booking() {
                 ))}
               </div>
 
-              <Reveal preset="base" y={10} delay={0.22}>
+              {/* NEXT（情報量を戻す最小） */}
+              <div className={styles.nextBlock} aria-label="次の流れ">
+                <div className={styles.slipTop}>
+                  <p className={styles.slipLabel}>NEXT</p>
+                  <p className={styles.slipHint}>ここまで</p>
+                </div>
+
+                <div className={styles.list} role="list" aria-label="次の流れ">
+                  {NEXT.map((it, i) => (
+                    <Reveal key={it.no} preset="base" y={10} delay={0.22 + i * 0.04}>
+                      <div className={styles.row} role="listitem">
+                        <span className={styles.no}>{it.no}</span>
+                        <span className={styles.txt}>{it.text}</span>
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+
+              <Reveal preset="base" y={10} delay={0.36}>
                 <p className={styles.note}>返信で、流れと日程を決めます。</p>
               </Reveal>
 
-              <Reveal preset="slow" y={12} delay={0.26}>
+              <Reveal preset="base" y={10} delay={0.40}>
+                <p className={styles.reply}>返信目安：24〜48h（混雑時は前後）</p>
+              </Reveal>
+
+              <Reveal preset="slow" y={12} delay={0.46}>
                 <a
                   className={styles.cta}
                   href={INSTAGRAM_URL}
@@ -151,8 +184,8 @@ export default function Booking() {
                 </a>
               </Reveal>
 
-              {/* ✅ 連絡手段の羅列はCONTACTに寄せる（重複回避） */}
-              <Reveal preset="base" y={8} delay={0.30}>
+              {/* 連絡手段の羅列はFooterへ */}
+              <Reveal preset="base" y={8} delay={0.52}>
                 <p className={styles.channelsCap}>
                   連絡先の詳細は下のCONTACTにまとめています。
                 </p>

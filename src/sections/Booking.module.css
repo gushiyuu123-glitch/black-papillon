@@ -17,8 +17,8 @@
   width: 104%;
   height: 104%;
   object-fit: cover;
-  opacity: 0.4;
-  filter: saturate(.90) contrast(1.08) brightness(.72);
+  opacity: 0.42;
+  filter: saturate(.90) contrast(1.08) brightness(.74);
   transform: translate3d(0,0,0);
   backface-visibility: hidden;
   z-index: 0;
@@ -140,22 +140,40 @@
   padding: clamp(18px, 2.2vw, 34px) 0;
 }
 
-/* slip（ガラス調） */
+/* slip（“カード”じゃなく帳簿へ） */
 .slip{
   position: relative;
   padding: clamp(28px, 2.6vw, 44px);
-  border-radius: 14px;
-  background: rgba(14, 14, 14, .34);
+
+  /* 丸み弱め（カード感を減らす） */
+  border-radius: 12px;
+
+  /* ガラスは薄く。箱に見せず“膜”に */
+  background: rgba(14, 14, 14, .30);
   border: 1px solid rgba(242,240,234,.14);
+
   box-shadow:
     0 34px 110px rgba(0,0,0,.55),
     inset 0 1px 0 rgba(242,240,234,.08),
     inset 0 -1px 0 rgba(0,0,0,.35);
-  -webkit-backdrop-filter: blur(6px) saturate(1.05) contrast(1.02);
-  backdrop-filter: blur(6px) saturate(1.05) contrast(1.02);
+
+  -webkit-backdrop-filter: blur(5px) saturate(1.03) contrast(1.02);
+  backdrop-filter: blur(5px) saturate(1.03) contrast(1.02);
 }
 
-/* "ガラスの反射"を上に一枚 */
+/* “帳簿の背骨” */
+.spine{
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  bottom: 18px;
+  width: 1px;
+  background: rgba(242,240,234,.12);
+  opacity: .88;
+  pointer-events: none;
+}
+
+/* 反射（上に1枚） */
 .slip::after{
   content: "";
   position: absolute;
@@ -166,7 +184,7 @@
     radial-gradient(120% 140% at 24% 10%, rgba(242,240,234,.09), rgba(242,240,234,0) 55%),
     radial-gradient(120% 140% at 80% 92%, rgba(0,0,0,.22), rgba(0,0,0,0) 58%),
     linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 40%);
-  opacity: .95;
+  opacity: .92;
 }
 
 .slipTop{
@@ -188,10 +206,11 @@
   color: rgba(242,240,234,.36);
 }
 
+/* ✅ 罫線で区切って“帳簿”に */
 .list{
   margin-top: 18px;
   display: grid;
-  gap: 12px;
+  gap: 0;
 }
 
 .row{
@@ -199,6 +218,12 @@
   grid-template-columns: 44px 1fr;
   align-items: baseline;
   column-gap: 18px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(242,240,234,.10);
+}
+
+.row:last-child{
+  border-bottom: 0;
 }
 
 .no{
@@ -211,6 +236,14 @@
   font-size: 13px;
   letter-spacing: 0.10em;
   color: rgba(242,240,234,.78);
+  line-height: 1.7;
+}
+
+/* NEXTブロック */
+.nextBlock{
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(242,240,234,.10);
 }
 
 .note{
@@ -218,9 +251,18 @@
   font-size: 12px;
   letter-spacing: 0.06em;
   color: rgba(242,240,234,.46);
+  line-height: 1.9;
 }
 
-/* CTA：ボタンにしない。線と文字で"合図" */
+.reply{
+  margin-top: 8px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(242,240,234,.38);
+  line-height: 1.9;
+}
+
+/* CTA：線と文字（署名として“届かない”） */
 .cta{
   margin-top: 18px;
   display: inline-flex;
@@ -228,13 +270,16 @@
   gap: 18px;
   width: fit-content;
   text-decoration: none;
+
   font-family: var(--h2-font);
   font-size: 14px;
   letter-spacing: 0.22em;
   color: rgba(242,240,234,.86);
+
   opacity: .70;
   position: relative;
   padding: 10px 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .cta::before,
@@ -242,9 +287,9 @@
   content: "";
   position: absolute;
   left: 0;
-  right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(242,240,234,.18), transparent);
+  width: 86%; /* ← 100%にしない（署名） */
+  background: rgba(242,240,234,.16);
   opacity: .95;
 }
 .cta::before{ top: 0; }
@@ -275,6 +320,7 @@
   background: rgba(242,240,234,.06);
 }
 
+/* Narrow */
 @media (max-width: 980px){
   .inner{
     grid-template-columns: 1fr;
@@ -284,5 +330,7 @@
   .divider{ display: none; }
   .kicker{ letter-spacing: 0.34em; }
   .watermark{ letter-spacing: 0.22em; }
-  .slip::after{ display: none; }
+
+  /* ここはPCっぽさ維持のため、反射は残してOK */
+  /* .slip::after{ display: none; } */
 }

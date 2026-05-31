@@ -4,6 +4,7 @@
   position: relative;
   padding: clamp(92px, 12vw, 150px) 0 clamp(86px, 10vw, 140px);
   isolation: isolate;
+  overflow: clip;
 }
 
 /* 薄い舞台（料金でも無味にしない） */
@@ -18,22 +19,40 @@
   z-index: 0;
 }
 
+/* 微細な織り（品） */
+.section::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(242,240,234,.010) 0px,
+      rgba(242,240,234,.010) 1px,
+      rgba(0,0,0,0) 6px,
+      rgba(0,0,0,0) 14px
+    );
+  opacity:.12;
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+
 .inner{
   width: min(720px, 92vw);
   margin: 0 auto;
+  padding: 0 var(--gutter);
   position: relative;
   z-index: 1;
 }
 
 /* ===== Head ===== */
-.head{
-  max-width: 680px;
-}
+.head{ max-width: 680px; }
 
 .kicker{
   font-size: 12px;
-  letter-spacing: 0.34em;
-  color: var(--faint);
+  letter-spacing: 0.30em;
+  color: rgba(242,240,234,.42);
   margin: 0;
 }
 
@@ -74,11 +93,11 @@
   overflow: visible;
 }
 
-/* 蝶：SP用に内側へ寄せて事故らせない */
+/* 蝶（ロック済み位置） */
 .bflyOnTitle{
   position: absolute;
   right: clamp(-10px, -1.4vw, -4px);
-top: clamp(-96px, -8.6vw, -50px);
+  top: clamp(-96px, -8.6vw, -50px);
 
   width: clamp(52px, 14vw, 82px);
   height: clamp(52px, 14vw, 82px);
@@ -98,54 +117,76 @@ top: clamp(-96px, -8.6vw, -50px);
 
 .lead{
   margin-top: clamp(16px, 4.2vw, 22px);
-  color: var(--muted);
+  color: rgba(242,240,234,.64);
   max-width: 60ch;
+  line-height: 1.9;
 }
 
 .how{
   margin-top: 10px;
-  color: rgba(242,240,234,.55);
-  letter-spacing: 0.04em;
-  line-height: 1.8;
+  color: rgba(242,240,234,.50);
+  letter-spacing: 0.03em;
+  line-height: 1.9;
+  text-wrap: balance;
 }
 
-/* ===== Tiers (SP: 1 column) ===== */
+/* ===== Tiers (SP: 1 column / no-card) ===== */
 .tiers{
   margin-top: clamp(28px, 6.8vw, 56px);
   display: flex;
   flex-direction: column;
-  gap: clamp(18px, 4.8vw, 24px);
+  gap: 0;
+  max-width: 680px;
+
+  /* 一覧としての罫線 */
+  border-top: 1px solid rgba(242,240,234,.08);
 }
 
 .tier{
   position: relative;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(242,240,234,.08);
 }
 
-/* ほんの少しだけ“帳簿の癖”を入れる（事故らない量） */
-.tier:nth-child(2){ transform: translateX(clamp(0px, 2.2vw, 12px)); }
-.tier:nth-child(3){ transform: translateX(clamp(-6px, -1.6vw, -10px)); }
+/* “帳簿の癖”（カード化しない量） */
+.tier:nth-child(2){ transform: translateX(clamp(0px, 1.4vw, 8px)); }
+.tier:nth-child(3){ transform: translateX(clamp(-4px, -1.0vw, -7px)); }
+
+/* 背骨（面を作らず、線だけ） */
+.tier::before{
+  content:"";
+  position:absolute;
+  left: 0;
+  top: 16px;
+  bottom: 16px;
+  width: 1px;
+  background: rgba(242,240,234,.12);
+  opacity: .82;
+  pointer-events:none;
+}
 
 .tierTop{
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(242,240,234,.06);
 }
 
 .tierName{
   margin: 0;
   font-family: var(--h2-font);
-  font-size: 12px;
-  letter-spacing: 0.28em;
+  font-size: 11px;
+  letter-spacing: 0.24em;
   font-weight: 600;
-  color: var(--text);
+  color: rgba(242,240,234,.86);
 }
 
 .tierPrice{
   margin: 0;
   color: rgba(242,240,234,.92);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
 }
 
 .tierMeta{
@@ -153,31 +194,34 @@ top: clamp(-96px, -8.6vw, -50px);
   display: inline-flex;
   gap: 10px;
   align-items: baseline;
-  color: rgba(242,240,234,.62);
+  color: rgba(242,240,234,.58);
 }
 
 .metaLabel{
   font-size: 11px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
 }
 
 .metaValue{
   font-size: 12px;
-  letter-spacing: 0.06em;
-  color: rgba(242,240,234,.78);
+  letter-spacing: 0.05em;
+  color: rgba(242,240,234,.74);
 }
 
 .tierNote{
   margin-top: 12px;
-  color: var(--muted);
+  color: rgba(242,240,234,.58);
   max-width: 44ch;
   line-height: 1.9;
 }
 
+/* 下の線（“カードの枠”ではなく、署名みたいに短く） */
 .tierLine{
-  margin-top: 18px;
+  margin-top: 14px;
   height: 1px;
-  background: linear-gradient(90deg, rgba(242,240,234,.14), rgba(242,240,234,.06), transparent);
+  width: 72%;
+  background: linear-gradient(90deg, rgba(242,240,234,.16), rgba(242,240,234,.08), transparent);
+  opacity: .95;
 }
 
 /* ===== Adjustment ===== */
@@ -190,25 +234,31 @@ top: clamp(-96px, -8.6vw, -50px);
 
 .adjustTitle{
   margin: 0;
-  color: rgba(242,240,234,.86);
-  letter-spacing: 0.08em;
+  color: rgba(242,240,234,.84);
+  letter-spacing: 0.07em;
 }
 
 .adjustText{
   margin-top: 12px;
-  color: var(--muted);
+  color: rgba(242,240,234,.60);
   line-height: 1.9;
 }
 
 .adjustFoot{
   margin-top: 10px;
-  color: rgba(242,240,234,.50);
+  color: rgba(242,240,234,.46);
 }
 
 .hairline{
   margin-top: clamp(26px, 6vw, 48px);
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+/* 狭い端末：詰まり回避 */
+@media (max-width: 380px){
+  .kicker{ letter-spacing: .28em; }
+  .tierName{ letter-spacing: .22em; }
 }
 
 /* SP専用保険 */

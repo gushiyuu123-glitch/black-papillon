@@ -5,9 +5,12 @@
   background: var(--bg);
   color: var(--text);
 
-  /* SPは詰めすぎない：核文が“呼吸”できる余白 */
   padding: clamp(96px, 12vw, 160px) 0 clamp(84px, 10vw, 140px);
+
+  /* ✅ clipの保険（先にhidden、対応ブラウザはclipに上書き） */
+  overflow: hidden;
   overflow: clip;
+
   isolation: isolate;
 }
 
@@ -82,6 +85,11 @@
   color: rgba(242,240,234,.74);
 }
 
+/* ✅ 極小幅だけ間延び防止 */
+@media (max-width: 380px){
+  .statement{ line-height: 1.92; }
+}
+
 /* SAMPLE (boxless) */
 .sampleReveal{
   margin-top: clamp(18px, 4.6vw, 30px);
@@ -117,20 +125,27 @@
   max-width: 100%;
   display: block;
 
-  opacity: .92;
+  opacity: .94;
+  /* ✅ “証拠”はシャープ。blurは常時入れない */
   filter:
-    saturate(.90)
-    contrast(1.02)
-    brightness(.98)
-    blur(.24px); /* ルール内で極薄 */
+    saturate(.92)
+    contrast(1.04)
+    brightness(1.00);
 
-  transform: translateZ(0) scale(1.005);
+  transform: translate3d(0,0,0) scale(1.006);
   backface-visibility: hidden;
 
   box-shadow: 0 34px 120px rgba(0,0,0,.34);
 
   position: relative;
   z-index: 1;
+}
+
+/* ✅ iPhone負荷＆眠さ回避：coarseはさらに軽量 */
+@media (pointer: coarse){
+  .sampleImg{
+    filter: saturate(.95) contrast(1.03);
+  }
 }
 
 .sampleCap{

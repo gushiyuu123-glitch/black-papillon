@@ -38,7 +38,7 @@ export default function PriceGuide() {
           </Reveal>
 
           {/* タイトル + 蝶（Heroと同じ：親relative + 中でabsolute） */}
-          <div className={styles.titleWrap} data-bfly-flap>
+     <div className={styles.titleWrap} data-bfly-flap="title">
             <Reveal preset="base" y={18} className={styles.titleReveal}>
               <div className={styles.titleStage}>
                 <h2 id="price-title" className={styles.srOnly}>
@@ -51,24 +51,29 @@ export default function PriceGuide() {
                   ariaLabel="PRICE GUIDE"
                 />
 
-                <Butterfly
-                  triggerRef={sectionRef}
-                  className={styles.bflyOnTitle}
-                  dir={BF_DIR}
-                  scrub={1.05}
-                  cycles={0.72}
-                  alpha={0.78}
-                  drift={{ x: 10, y: 16, rot: 3 }}
-                  driftScrub={0.9}
-                  introDelay={0.22}
-                  introDur={0.34}
-                  disabledOnCoarse={true}
-                  flapOnHover={true}
-                  hoverScopeRef={sectionRef}
-                  hoverSelector="[data-bfly-flap]"
-                  hoverDur={0.62}
-                  hoverCooldown={0.42}
-                />
+     <Butterfly
+  triggerRef={sectionRef}
+  className={styles.bflyOnTitle}
+  dir={BF_DIR}
+
+  scrub={1.65}
+  cycles={0.48}
+  alpha={0.74}
+
+  drift={{ x: 6, y: 10, rot: 1.4 }}
+  driftScrub={1.20}
+
+  introDelay={0.18}
+  introDur={0.52}
+
+  disabledOnCoarse={true}
+
+  flapOnHover={true}
+  hoverScopeRef={sectionRef}
+  hoverSelector='[data-bfly-flap="title"]'
+  hoverDur={0.72}
+  hoverCooldown={0.95}
+/>
               </div>
             </Reveal>
           </div>

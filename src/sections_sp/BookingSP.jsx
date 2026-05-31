@@ -3,14 +3,18 @@ import styles from "./BookingSP.module.css";
 import Reveal from "../components/Reveal";
 
 const BOOKING_BG = "/booking/booking-bg.png";
-
-// 例: https://instagram.com/blackpapillon_tattoo
 const INSTAGRAM_URL = "#";
 
 const SEND = [
   { no: "01", text: "部位 / だいたいのサイズ" },
   { no: "02", text: "参考（画像 or URL）" },
   { no: "03", text: "希望時期" },
+];
+
+const NEXT = [
+  { no: "A", text: "内容確認 → 返信（流れ/候補日）" },
+  { no: "B", text: "当日、線と配置を決める（止められます）" },
+  { no: "C", text: "下絵確定後に、金額と日程を確定" },
 ];
 
 export default function BookingSP() {
@@ -20,7 +24,6 @@ export default function BookingSP() {
       className={styles.section}
       aria-labelledby="booking-title_sp"
     >
-      {/* 背景（SPは静止。ScrollTriggerなし） */}
       <img
         className={styles.bgImg}
         src={BOOKING_BG}
@@ -33,7 +36,6 @@ export default function BookingSP() {
       <div className={styles.bgVeil} aria-hidden="true" />
 
       <div className={styles.inner}>
-        {/* Head */}
         <header className={styles.head}>
           <div className={styles.watermark} aria-hidden="true">
             BOOKING
@@ -58,10 +60,12 @@ export default function BookingSP() {
           <div className={styles.headLine} aria-hidden="true" />
         </header>
 
-        {/* Slip */}
         <div className={styles.right} aria-label="Booking slip (SP)">
           <Reveal preset="slow" y={16} delay={0.08}>
             <div className={styles.slip}>
+              {/* これで“カード”じゃなく“帳簿”になる */}
+              <div className={styles.spine} aria-hidden="true" />
+
               <div className={styles.slipTop}>
                 <p className={styles.slipLabel}>SEND</p>
                 <p className={styles.slipHint}>3点だけ</p>
@@ -78,11 +82,32 @@ export default function BookingSP() {
                 ))}
               </div>
 
-              <Reveal preset="base" y={10} delay={0.22}>
-                <p className={styles.note}>返信で、流れと日程を決めます。</p>
+              {/* 追加：PCの“安心”をSPに最小で持ってくる */}
+              <div className={styles.nextBlock} aria-label="次の流れ">
+                <div className={styles.slipTop}>
+                  <p className={styles.slipLabel}>NEXT</p>
+                  <p className={styles.slipHint}>ここまで</p>
+                </div>
+
+                <div className={styles.list} role="list" aria-label="次の流れ">
+                  {NEXT.map((it, i) => (
+                    <Reveal key={it.no} preset="base" y={10} delay={0.18 + i * 0.04}>
+                      <div className={styles.row} role="listitem">
+                        <span className={styles.no}>{it.no}</span>
+                        <span className={styles.txt}>{it.text}</span>
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+
+              <Reveal preset="base" y={10} delay={0.30}>
+                <p className={styles.note}>
+                  返信目安：24〜48h（混雑時は前後します）
+                </p>
               </Reveal>
 
-              <Reveal preset="slow" y={12} delay={0.26}>
+              <Reveal preset="slow" y={12} delay={0.34}>
                 <a
                   className={styles.cta}
                   href={INSTAGRAM_URL}
@@ -97,7 +122,7 @@ export default function BookingSP() {
                 </a>
               </Reveal>
 
-              <Reveal preset="base" y={8} delay={0.30}>
+              <Reveal preset="base" y={8} delay={0.38}>
                 <p className={styles.channelsCap}>
                   連絡先の詳細は下のCONTACTにまとめています。
                 </p>

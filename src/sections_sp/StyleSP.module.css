@@ -3,11 +3,13 @@
 .section{
   position: relative;
   padding: clamp(86px, 10.5vw, 140px) 0;
+  overflow: clip;
 }
 
 .inner{
   width: min(720px, 92vw);
   margin: 0 auto;
+  padding: 0 var(--gutter);
 }
 
 /* ========== top (pillar as atmosphere) ========== */
@@ -16,24 +18,40 @@
   margin-bottom: clamp(22px, 4.2vw, 34px);
 }
 
+/* ✅ 柱は“パネル”じゃなく“空気”に寄せる */
 .pillar{
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 10;
-  border: 1px solid var(--line);
+  border: none;            /* card感を消す */
   background: var(--surface);
   overflow: hidden;
-  box-shadow: var(--shadow-soft);
+  box-shadow: none;        /* card感を消す */
+  isolation: isolate;
 }
 
+/* ✅ 背景の呼吸（フレームは動かさず、柱だけ） */
 .pillarImg{
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: translateZ(0) scale(1.02);
+  transform: translate3d(0,0,0) scale(1.03);
   filter: saturate(0.98) contrast(1.02);
+  backface-visibility: hidden;
+  will-change: transform;
+  animation: pillarBreath 18s ease-in-out infinite alternate;
 }
 
+@keyframes pillarBreath{
+  0%   { transform: translate3d(0,0,0) scale(1.03); }
+  100% { transform: translate3d(0,-1.6%,0) scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .pillarImg{ animation: none; will-change: auto; }
+}
+
+/* veil（世界観の黒膜） */
 .pillarVeil{
   position: absolute;
   inset: 0;
@@ -41,6 +59,20 @@
     radial-gradient(120% 120% at 18% 10%, rgba(242,240,234,.06), transparent 58%),
     linear-gradient(180deg, rgba(7,8,10,.06), rgba(7,8,10,.58));
   pointer-events: none;
+  z-index: 1;
+}
+
+/* ✅ 枠なしの代わりに“滲み”で支える（品） */
+.pillar::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(70% 80% at 50% 60%, rgba(242,240,234,.07), rgba(242,240,234,0) 62%),
+    radial-gradient(120% 120% at 50% 50%, rgba(0,0,0,0), rgba(0,0,0,.34) 76%, rgba(0,0,0,.56) 100%);
+  opacity:.55;
+  z-index: 2;
 }
 
 /* 文字を“柱の上”に浮かせる */
@@ -49,7 +81,7 @@
   left: 14px;
   right: 14px;
   bottom: 14px;
-  z-index: 2;
+  z-index: 3;
 }
 
 .kicker{
@@ -106,14 +138,13 @@
 .itemMid{
   transform: translateX(clamp(0px, 2.4vw, 14px));
 }
+
 /* 3枚目は少し戻してリズムを閉じる */
 .itemLast{
   transform: translateX(clamp(-6px, -1.6vw, -12px));
 }
 
-.frameReveal{
-  display: block;
-}
+.frameReveal{ display: block; }
 
 .frame{
   position: relative;
@@ -123,13 +154,16 @@
   background: var(--surface);
   overflow: hidden;
   box-shadow: 0 18px 60px rgba(0,0,0,.46);
+  isolation: isolate;
 }
 
 .frameImg{
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: translateZ(0);
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+  will-change: transform;
   filter: saturate(0.96) contrast(1.03);
 }
 
@@ -140,9 +174,10 @@
     radial-gradient(120% 120% at 20% 10%, rgba(242,240,234,.07), transparent 60%),
     linear-gradient(180deg, rgba(7,8,10,.06), rgba(7,8,10,.52));
   pointer-events: none;
+  z-index: 1;
 }
 
-/* “作品の隅に刻む”ラベル（カード感を避ける） */
+/* “作品の隅に刻む”ラベル（UIっぽさを落とす） */
 .onFrame{
   position: absolute;
   left: 14px;
@@ -162,9 +197,10 @@
 .onTitle{
   font-family: var(--h2-font);
   font-size: 12px;
-  letter-spacing: 0.30em;
+  letter-spacing: .24em; /* 0.30 → 品 */
   font-weight: 700;
   color: rgba(242,240,234,.92);
+  opacity: .88;
 }
 
 .onRule{
@@ -175,8 +211,9 @@
 
 .onWord{
   font-size: 10px;
-  letter-spacing: 0.36em;
+  letter-spacing: .30em; /* 0.36 → 品 */
   color: rgba(242,240,234,.26);
+  opacity: .22;
 }
 
 .meta{

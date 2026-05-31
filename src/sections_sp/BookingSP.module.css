@@ -19,8 +19,9 @@
   height: 104%;
   object-fit: cover;
 
-  opacity: 0.36;
-  filter: saturate(.90) contrast(1.06) brightness(.70);
+  /* ✅ “安い黒”になりやすいので、少し持ち上げる */
+  opacity: 0.40;
+  filter: saturate(.92) contrast(1.06) brightness(.78);
 
   transform: translate3d(0,0,0);
   backface-visibility: hidden;
@@ -122,31 +123,44 @@
   margin-top: clamp(16px, 4.6vw, 26px);
 }
 
+/* ✅ カード感を殺して “帳簿/スリップ” に寄せる */
 .slip{
   position: relative;
   padding: clamp(22px, 5.6vw, 32px);
-  border-radius: 14px;
 
-  /* SPは重いbackdrop-filterを使わず“膜”で見せる */
-  background: rgba(14, 14, 14, .36);
-  border: 1px solid rgba(242,240,234,.14);
-  box-shadow:
-    0 28px 92px rgba(0,0,0,.55),
-    inset 0 1px 0 rgba(242,240,234,.08),
-    inset 0 -1px 0 rgba(0,0,0,.35);
+  border-radius: 0;      /* ←丸いカード感を消す */
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
-.slip::after{
-  content: "";
+/* 薄い“帳簿の膜”だけ残す（箱じゃなく空気） */
+.slip::before{
+  content:"";
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
+  inset: -8px -10px;
   pointer-events: none;
+
   background:
-    radial-gradient(120% 140% at 24% 10%, rgba(242,240,234,.08), rgba(242,240,234,0) 55%),
-    radial-gradient(120% 140% at 80% 92%, rgba(0,0,0,.24), rgba(0,0,0,0) 58%),
-    linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,0) 40%);
-  opacity: .95;
+    linear-gradient(180deg, rgba(242,240,234,.06), rgba(242,240,234,0) 52%),
+    radial-gradient(120% 140% at 26% 10%, rgba(242,240,234,.06), rgba(0,0,0,0) 55%);
+
+  border-top: 1px solid rgba(242,240,234,.14);
+  border-bottom: 1px solid rgba(242,240,234,.10);
+
+  opacity: .92;
+}
+
+/* 目印の縦スパイン（jsxで <div className={styles.spine} /> を置く） */
+.spine{
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: rgba(242,240,234,.14);
+  opacity: .85;
+  pointer-events: none;
 }
 
 .slipTop{
@@ -170,10 +184,11 @@
   color: rgba(242,240,234,.36);
 }
 
+/* 罫線で区切るので gap は消す */
 .list{
   margin-top: 18px;
   display: grid;
-  gap: 12px;
+  gap: 0;
 }
 
 .row{
@@ -181,6 +196,13 @@
   grid-template-columns: 44px 1fr;
   align-items: baseline;
   column-gap: 18px;
+
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(242,240,234,.10);
+}
+
+.row:last-child{
+  border-bottom: 0;
 }
 
 .no{
@@ -193,6 +215,14 @@
   font-size: 13px;
   letter-spacing: 0.10em;
   color: rgba(242,240,234,.80);
+  line-height: 1.7;
+}
+
+/* NEXTブロック（jsxの .nextBlock に対応） */
+.nextBlock{
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(242,240,234,.10);
 }
 
 .note{
@@ -200,9 +230,10 @@
   font-size: 12px;
   letter-spacing: 0.06em;
   color: rgba(242,240,234,.48);
+  line-height: 1.9;
 }
 
-/* CTA：線と文字（ただしSPは“押せる面積”を確保） */
+/* CTA：線と文字（押せる面積を確保） */
 .cta{
   margin-top: 18px;
   display: block;
@@ -255,10 +286,18 @@
   letter-spacing: .06em;
   color: rgba(242,240,234,.44);
   opacity: .88;
+  line-height: 1.9;
 }
 
 .footerLine{
   margin-top: clamp(36px, 6.8vw, 64px);
   height: 1px;
   background: rgba(242,240,234,.06);
+}
+
+/* 狭い端末だけ微調整（詰まり回避） */
+@media (max-width: 380px){
+  .txt{ letter-spacing: .08em; }
+  .row{ column-gap: 14px; }
+  .cta{ letter-spacing: .18em; }
 }

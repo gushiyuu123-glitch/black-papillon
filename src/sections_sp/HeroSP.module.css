@@ -5,13 +5,25 @@
 */
 
 .hero{
+  /* ✅ svh fallback → dvh優先（端末差を吸収） */
   min-height: 100svh;
+  min-height: 100dvh;
+
   background: var(--bg);
   color: var(--text);
 
-  padding: 14px var(--gutter) 56px;
+  /* ✅ safe-area対応（ノッチ/ホームバーで詰まらない） */
+  padding:
+    calc(14px + env(safe-area-inset-top))
+    var(--gutter)
+    calc(56px + env(safe-area-inset-bottom));
+
   position: relative;
+
+  /* ✅ clipの保険（iOSでの事故回避） */
+  overflow-x: hidden;
   overflow-x: clip;
+
   isolation: isolate;
 }
 
@@ -48,7 +60,10 @@
 /* ========== river ========== */
 .river{
   width: 100%;
-  height: clamp(520px, 72svh, 760px);
+
+  /* ✅ 高さ定義は1箇所に統一 */
+  height: clamp(420px, 60svh, 680px);
+
   position: relative;
   overflow: hidden;
 
@@ -60,6 +75,11 @@
     0 2px 0 rgba(242,240,234,.06) inset;
 
   border-radius: 0; /* “額縁”を残す（角丸にしない） */
+  isolation: isolate;
+}
+
+@media (max-height: 700px){
+  .river{ height: clamp(400px, 58svh, 640px); }
 }
 
 .river::after{
@@ -69,6 +89,7 @@
   background:
     radial-gradient(520px 420px at 65% 22%, rgba(242,240,234,.06), rgba(7,8,10,0) 60%);
   pointer-events:none;
+  z-index: 2;
 }
 
 .riverImg{
@@ -84,6 +105,7 @@
   will-change: transform, clip-path;
   max-width: none;
   backface-visibility: hidden;
+  z-index: 0;
 }
 
 .riverVeil{
@@ -94,6 +116,7 @@
     radial-gradient(520px 420px at 70% 30%, rgba(14,42,47,.18), rgba(7,8,10,0) 60%);
   pointer-events:none;
   will-change: opacity;
+  z-index: 1;
 }
 
 .riverMeta{
@@ -105,6 +128,7 @@
   font-weight: 800;
   font-size: 10px;
   color: rgba(242,240,234,.62);
+  z-index: 3;
 }
 
 /* ========== body ========== */
@@ -195,6 +219,8 @@
   padding-bottom: 6px;
   border-bottom: 1px solid rgba(242,240,234,.16);
   transition: border-color .18s ease, transform .18s ease, color .18s ease;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
 }
 
 .link:active{
@@ -227,14 +253,4 @@
 /* SP専用（保険） */
 @media (min-width: 900px){
   .hero{ display:none; }
-}
-/* HeroSP.module.css */
-
-.river{
-  height: clamp(420px, 60svh, 680px);
-}
-
-/* SEみたいな低い画面だけ、さらに少し詰める */
-@media (max-height: 700px){
-  .river{ height: clamp(400px, 58svh, 640px); }
 }
