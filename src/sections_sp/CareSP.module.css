@@ -242,3 +242,81 @@
 .dd{
   font-size: 12.5px;       /* 追加：主張を1段落とす */
 }
+/* ===== CareSP.module.css : patch（末尾に追記） ===== */
+
+/* 0) SPの初期カクつき対策：背景ドリフトはスマホでは切る（任意だが効く） */
+@media (pointer: coarse){
+  .section::before{ animation: none; }
+}
+
+/* 1) ヘッダー文字面：少しだけ締める */
+.kicker{
+  font-size: 10.5px;
+  letter-spacing: .28em;
+}
+
+.title{
+  font-size: clamp(18px, 5.1vw, 23px);
+  letter-spacing: 0.015em;
+}
+
+.lead{
+  font-size: 12.5px;
+  line-height: 1.85;
+  letter-spacing: .015em;
+}
+
+/* 2) Ledger：背骨＋左インデントで“洒落”を統一 */
+.ledger{
+  padding-left: 12px;
+}
+
+.ledger::after{
+  content:"";
+  position:absolute;
+  left: 2px;
+  top: 18px;
+  bottom: 18px;
+  width: 1px;
+  background: rgba(242,240,234,.12);
+  opacity: .62;
+  pointer-events:none;
+}
+
+/* 3) 見出し：少し小さく、密度を上げる */
+.ledgerTitle{
+  font-size: 10px;
+  letter-spacing: .22em;
+}
+
+.ledgerNote{
+  font-size: 11px;
+  letter-spacing: .05em;
+}
+
+/* 4) 行：可読性を落とさず、帳簿感を強める */
+.row{
+  grid-template-columns: 74px minmax(0, 1fr);
+  padding: 12px 0;
+  border-bottom-color: rgba(242,240,234,.07);
+}
+
+.dt{
+  font-size: 10.5px;
+  letter-spacing: .09em;
+  font-variant-numeric: tabular-nums;
+}
+
+.dd{
+  font-size: 12.3px;
+  line-height: 1.85;
+  letter-spacing: .01em;
+  text-wrap: balance;
+}
+
+/* 5) Promise：本文より少しだけ細く */
+.promise{
+  font-size: 12.5px;
+  letter-spacing: .02em;
+  line-height: 1.85;
+}

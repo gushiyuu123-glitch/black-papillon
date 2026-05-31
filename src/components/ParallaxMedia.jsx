@@ -1,26 +1,35 @@
+// src/components/ParallaxMedia.jsx
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./ParallaxMedia.module.css";
-let _pmRefreshRaf = 0;
-function pmScheduleRefresh() {
-  if (_pmRefreshRaf) return;
-  _pmRefreshRaf = requestAnimationFrame(() => {
-    _pmRefreshRaf = 0;
-    ScrollTrigger.refresh();
-  });
-}
+
 gsap.registerPlugin(ScrollTrigger);
+
+/* -------------------------------------------------------
+  Refresh debounce (画像ロード連発で refresh 地獄にならないように)
+------------------------------------------------------- */
+let _pmRefreshTimer = 0;
+function pmScheduleRefresh() {
+  if (_pmRefreshTimer) clearTimeout(_pmRefreshTimer);
+  _pmRefreshTimer = setTimeout(() => {
+    _pmRefreshTimer = 0;
+    ScrollTrigger.refresh(true);
+  }, 140); // 120〜200ms帯が体感いい
+}
 
 export default function ParallaxMedia({
   src,
   alt = "",
   className = "",
   enabled = true,
+
   yPercent = 6,
   scale = 1.02,
+
   disabledOnCoarse = true,
   fit = "cover", // "cover" | "contain"
+
   bgBlur = 18,
   bgOpacity = 0.55,
 }) {
@@ -33,33 +42,32 @@ export default function ParallaxMedia({
     const fg = fgRef.current;
     const bg = bgRef.current;
     if (!wrap || !fg) return;
-if (!enabled) return;
+    if (!enabled) return;
+
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
     const coarse =
       window.matchMedia?.("(pointer: coarse)")?.matches ?? false;
 
-    // ✅ 画像ロード後にrefresh（ズレ＝効いてない感を潰す）
-   const onLoad = () => pmScheduleRefresh();
+    // ✅ SP/reduce は「動き」も「refresh予約」も「load監視」もしない（副作用を完全に切る）
+    if (reduce || (disabledOnCoarse && coarse)) {
+      gsap.set(fg, { y: 0, scale: 1, clearProps: "transform" });
+      if (bg) gsap.set(bg, { y: 0, scale: 1, clearProps: "transform" });
+      return;
+    }
+
+    // ✅ 画像ロード後に refresh（ズレ＝効いてない感を潰す）
+    const onLoad = () => pmScheduleRefresh();
 
     const imgs = [fg, bg].filter(Boolean);
 
+    // load が飛ぶ画像だけ監視（once）
     imgs.forEach((img) => {
       if (!img.complete) img.addEventListener("load", onLoad, { once: true });
     });
 
-    // ✅ キャッシュ済みでloadが飛ばないケースの保険
+    // ✅ キャッシュ済みでloadが飛ばないケースの保険（ただし debounced）
     pmScheduleRefresh();
-
-    // reduce / coarse は安全側（動きもズームも殺す）
-    if (reduce || (disabledOnCoarse && coarse)) {
-      gsap.set(fg, { y: 0, scale: 1, clearProps: "transform" });
-      if (bg) gsap.set(bg, { y: 0, scale: 1, clearProps: "transform" });
-
-      return () => {
-        imgs.forEach((img) => img.removeEventListener("load", onLoad));
-      };
-    }
 
     // containは背景だけだと体感薄い → “移動量”を増幅
     const amp = fit === "contain" ? 2.1 : 1.35;

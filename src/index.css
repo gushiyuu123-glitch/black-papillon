@@ -241,3 +241,8 @@ html, body { overflow-x: clip; }
 @supports not (overflow: clip){
   html, body { overflow-x: hidden; }
 }
+/* Tap feel (SP体感改善) */
+:where(a, button, [role="button"]) {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}

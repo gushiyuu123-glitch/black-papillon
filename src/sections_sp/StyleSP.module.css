@@ -237,3 +237,41 @@
 @media (min-width: 900px){
   .section{ display:none; }
 }
+/* ===== StyleSP.module.css : patch（末尾に追記） ===== */
+
+/* 1) セクション自体に少し呼吸を足す（上下余白を+） */
+.section{
+  padding: clamp(98px, 12.2vw, 158px) 0;
+}
+
+/* 2) 柱の“器”を少し縦に伸ばす（ヘッダーが窮屈にならない） */
+.pillar{
+  aspect-ratio: 16 / 11; /* 16/10 → 少しだけ縦長 */
+}
+
+/* 3) ヘッダーをほんの少し上に逃がして、下端の窮屈さを消す */
+.head{
+  left: 16px;
+  right: 16px;
+  bottom: 18px; /* 14px → 18px */
+}
+
+/* 4) 柱 → リストの間隔を増やす（ここが“詰まり”の主因） */
+.top{
+  margin-bottom: clamp(30px, 6.0vw, 46px);
+}
+
+/* 5) 作品フレーム → コピーの間隔を少し増やす（読ませる呼吸） */
+.meta{
+  margin-top: 14px; /* 12px → 14px */
+}
+
+/* 6) リストの縦gapを少し増やす（1枚ずつ“置く”感じに） */
+.list{
+  gap: clamp(22px, 5.2vw, 34px);
+}
+
+/* 7) coarse（スマホ）では柱のBreathを止めて“窮屈＋重さ”の副作用を消す（任意だけどおすすめ） */
+@media (pointer: coarse){
+  .pillarImg{ animation: none; will-change: auto; }
+}

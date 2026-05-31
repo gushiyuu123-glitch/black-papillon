@@ -9,18 +9,30 @@ const OBSERVER_POOL = new Map(); // key -> { io, elements:Set }
 
 function getObserver({ rootMargin, threshold }) {
   const key = `${rootMargin}|${threshold}`;
-
   if (OBSERVER_POOL.has(key)) return OBSERVER_POOL.get(key);
 
   const elements = new Set();
+
   const io = new IntersectionObserver(
     (entries) => {
       for (const e of entries) {
-        if (!e.isIntersecting) continue;
         const el = e.target;
-        el.dataset.inview = "1";
-        io.unobserve(el);
-        elements.delete(el);
+
+        // once=false のときは出たり入ったりで更新
+        // once=true のときは入った瞬間に確定してunobserve
+        if (e.isIntersecting) {
+          el.dataset.inview = "1";
+
+          const once = el.dataset.rvOnce === "1";
+          if (once) {
+            io.unobserve(el);
+            elements.delete(el);
+          }
+        } else {
+          // once=falseのみ戻す（once=trueは一度出たら固定）
+          const once = el.dataset.rvOnce === "1";
+          if (!once) el.dataset.inview = "0";
+        }
       }
     },
     { threshold, rootMargin }
@@ -68,23 +80,36 @@ export default function Reveal({
       return;
     }
 
-    // 既に表示範囲内なら即（hash遷移直後の“効いてない感”回避）
-    const r = el.getBoundingClientRect();
-    if (r.top < window.innerHeight * 0.92 && r.bottom > 0) {
-      el.dataset.inview = "1";
-      return;
+    // ✅ 「hash遷移直後の効いてない感回避」は必要な時だけ
+    // 初回ロードで大量に getBoundingClientRect を叩かない
+    const hasHash = window.location.hash?.length > 1;
+    const resumed = window.scrollY > 0;
+
+    if (hasHash || resumed) {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.92 && r.bottom > 0) {
+        el.dataset.inview = "1";
+        return;
+      }
     }
+
+    // once情報をobserver側に渡す（共有IOでも要素ごとに挙動を変えられる）
+    el.dataset.rvOnce = once ? "1" : "0";
 
     const bundle = getObserver({ rootMargin, threshold });
     bundle.elements.add(el);
-    bundle.io.observe(el);
+
+    // ✅ 初期入力（タップ/スクロール）を邪魔しないように1フレーム逃がす
+    const raf = requestAnimationFrame(() => {
+      bundle.io.observe(el);
+    });
 
     return () => {
+      cancelAnimationFrame(raf);
       try {
         bundle.io.unobserve(el);
       } catch {}
       bundle.elements.delete(el);
-      // 空になったobserverは残してOK（再利用の方が速い）
     };
   }, [rootMargin, threshold, once]);
 
@@ -94,7 +119,8 @@ export default function Reveal({
       className={`${styles.reveal} ${className}`}
       style={vars}
       data-inview="0"
-      data-preset={preset}   // ✅ これが最重要。slowが生きる。
+      data-preset={preset} // ✅ これが最重要。slowが生きる。
+      data-rv-once={once ? "1" : "0"}
     >
       {children}
     </Tag>

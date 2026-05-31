@@ -2,7 +2,7 @@
 import styles from "./BookingSP.module.css";
 import Reveal from "../components/Reveal";
 
-const BOOKING_BG = "/booking/booking-bg.png";
+const BOOKING_BG = "/booking/booking-bgsp1.png";
 const INSTAGRAM_URL = "#";
 
 const SEND = [

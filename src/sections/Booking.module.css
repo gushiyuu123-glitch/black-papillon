@@ -17,7 +17,7 @@
   width: 104%;
   height: 104%;
   object-fit: cover;
-  opacity: 0.42;
+  opacity: 0.48;
   filter: saturate(.90) contrast(1.08) brightness(.74);
   transform: translate3d(0,0,0);
   backface-visibility: hidden;

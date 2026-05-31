@@ -145,3 +145,9 @@
   --pm-veilTop: .62;
   --pm-petrol: .26;
 }
+@media (pointer: coarse){
+  .bg{
+    filter: none;
+    will-change: auto;
+  }
+}

@@ -265,3 +265,109 @@
 @media (min-width: 900px){
   .section{ display:none; }
 }
+/* ===== PriceGuideSP.module.css : patch ===== */
+
+/* 見出し周り：少しだけ小さく、密度を上げる */
+.kicker{
+  font-size: 11px;
+  letter-spacing: 0.32em;
+}
+
+.lead{
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  line-height: 1.85;
+}
+
+.how{
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  line-height: 1.85;
+}
+
+/* 一覧：左の“背骨”を活かして、文字面を整える */
+.tier{
+  padding: 16px 0;
+  padding-left: 12px; /* ←背骨と文字が噛まないように */
+}
+
+.tier::before{
+  left: 2px;
+  opacity: .72;
+}
+
+/* 行：少し締めて、上品に */
+.tierTop{
+  padding-bottom: 9px;
+}
+
+.tierName{
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  font-weight: 600;
+}
+
+.tierPrice{
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums; /* 数字が締まる */
+}
+
+.metaLabel{
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.metaValue{
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.tierNote{
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  line-height: 1.85;
+}
+
+/* 下線：少し短くして“署名感”寄せ */
+.tierLine{
+  width: 66%;
+}
+
+/* Adjustment：同じ背骨文法で統一（洒落感アップ） */
+.adjust{
+  position: relative;
+  padding-left: 12px;
+}
+
+.adjust::before{
+  content:"";
+  position:absolute;
+  left: 2px;
+  top: 18px;
+  bottom: 0;
+  width: 1px;
+  background: rgba(242,240,234,.12);
+  opacity: .62;
+  pointer-events:none;
+}
+
+.adjustTitle{
+  font-size: 12px;
+  letter-spacing: 0.10em;
+}
+
+.adjustText{
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.adjustFoot{
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+/* 狭い端末：さらに詰めすぎない保険 */
+@media (max-width: 380px){
+  .lead, .how, .tierPrice, .tierNote, .adjustText{ font-size: 12.5px; }
+}
